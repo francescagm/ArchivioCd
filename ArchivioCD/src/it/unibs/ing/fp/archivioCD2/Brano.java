@@ -21,7 +21,7 @@ public class Brano {
 		this.interprete = interprete;
 		this.progressivo++;
 		this.codiceBrano=Brano.class.getSimpleName()+ progressivo ;
-		durataBranoSecondi.
+	
 	}
 
 
