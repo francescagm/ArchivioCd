@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ArchivioCd {
     private static final int  MAX_ARCHIVIO= 50000;// metto anche qui in secondi 
 	public ArrayList<Cd> getTuttiCd() {
-		return TuttiCd;
+		return TuttiCd; // riprova
 	}
 
 	public void setTuttiCd(ArrayList<Cd> tuttiCd) {//ciao sono francescaaa
