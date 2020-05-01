@@ -8,7 +8,7 @@ public class ArchivioCd {
 		return TuttiCd;
 	}
 
-	public void setTuttiCd(ArrayList<Cd> tuttiCd) {
+	public void setTuttiCd(ArrayList<Cd> tuttiCd) {//ciao sono francescaaa
 		TuttiCd = tuttiCd;
 	}
 	private ArrayList<Cd> TuttiCd;
