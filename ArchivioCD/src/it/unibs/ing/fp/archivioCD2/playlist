@@ -1,0 +1,42 @@
+     // File OrdinateEntrambi0STAR/PlayList.java
+import java.util.*;
+public class PlayList {
+private final String nome;
+private LinkedList<TipoLinkContiene> insieme_link;
+public PlayList(String n) {
+nome = n;
+insieme_link = new LinkedList<TipoLinkContiene>();
+}
+public String getNome() { return nome; }
+public void inserisciLinkContiene(TipoLinkIscritto t) {
+if (t != null && t.getPlayList()==this)
+ManagerContiene.inserisci(t);
+}
+public void eliminaLinkContiene(TipoLinkIscritto t) {
+if (t != null && t.getPlayList()==this)
+ManagerContiene.elimina(t);
+}
+public List<TipoLinkContiene> getLinkContiene() {
+return (LinkedList<TipoLinkContiene>)insieme_link.clone();
+}
+public void inserisciPerManagerContiene(ManagerContiene a){
+if (a != null && !insieme_link.contains(a.getLink()))
+insieme_link.add(a.getLink());
+}
+public void eliminaPerManagerContiene(ManagerContiene a) {
+if (a != null) insieme_link.remove(a.getLink());
+}
+public int durataTotale() {
+int result = 0;
+Iterator<TipoLinkContiene> il = insieme_link.iterator();
+while (il.hasNext()) {
+Brano b = il.next().getBrano();
+result = result + b.getDurata();
+}
+return result;
+}
+}
+
+
+
+
