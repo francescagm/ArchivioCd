@@ -2,80 +2,89 @@ package it.unibs.ing.fp.archivioCD2;
 
 import java.sql.Time;
 import java.util.ArrayList;
- 
+
 public class Cd {
-    
+
 	private String autore;
-	private  Time durataCdSecondi ;
-	private String titolo_Cd;
+	private Time durataCd;
+	private String titoloCd;
 	private ArrayList<Brano> compilation;
-   
 	private String codiceCd;
 	private static int progressivo = 0;
-	
-	
+
 	public Cd(String _titoloCd, String _autore) {
 		compilation = new ArrayList<Brano>();
-		setTitolo_Cd(_titoloCd);
+		setTitoloCd(_titoloCd);
 		setAutore(_autore);
 		progressivo++;
 
 		setCodiceCd();
-		setDurataCd(durataCdSecondi);	
+		setDurataCdSecondi(0);
 	}
-	
-	
-public String getCodiceCd() {
+
+	public String getCodiceCd() {
 		return codiceCd;
 	}
 
-private void setCodiceCd() {
-	this.codiceCd = Cd.class.getSimpleName() + progressivo;
-}
-	
+	private void setCodiceCd() {
+		this.codiceCd = Cd.class.getSimpleName() + progressivo;
+	}
 
+	public void aggiuntaBrano(Brano Brano) {
+	//TODO
+		compilation.add(Brano);
 
-public void aggiuntaBrano(Brano Brano) {
-     compilation.add(Brano);
+	}
+
+	public boolean eliminaBrano(String titolo) {
+		if (!compilation.isEmpty()) {
+			for (int i = 0; i < compilation.size(); i++) {
+				if (compilation.get(i).getTitoloBrano().equals(titolo)) {
+					compilation.remove(i);
+					return true;
+				}
+			}
+		}
+		return false;
+
+	}
+	//TODO
+	public Brano cercaBrano(Brano brano) {
+		for (Brano br : compilation) {
+			br.equals(brano);
+			return null;
+		}
+		return null;
 		
 	}
+	
+	public void visualizzaBrano(Brano titolo) {
+		if (compilation != null) {
+			for (int i = 0; i < compilation.size(); i++) {
+				if (compilation.get(i).getTitoloBrano().equals(titolo))
+					System.out.println("" + compilation.get(i));
+			}
 
-public boolean eliminaBrano(String titolo) {
-	if (compilation!=null) {
-	for (int i=0;i<compilation.size();i++) {
-		if(compilation.get(i).getTitoloBrano().equals(titolo))
-			compilation.remove(i);
-		    return true;
+		} else {
+			System.out.println("brano non trovato");
 		}
-	return false;
-	
+
 	}
-	
- public void visualizzaBrano(Brano titolo) {
-	 if (compilation!=null) {
-		 for (int i=0;i<compilation.size();i++) {
-				if(compilation.get(i).getTitoloBrano().equals(titolo))
-				System.out.println(""+compilation.get(i));}
 
-		 }	 else {System.out.println("brano non trovato");
-	 }
- 
- }
+	public void cercaBrano(String codice) {
+		if (compilation != null) {
+			for (int i = 0; i < compilation.size(); i++) {
+				if (compilation.get(i).getCodiceBrano().equals(codice))
+					System.out.println("" + compilation.get(i).getTitoloBrano());
+			}
 
- public void cercaBrano(String codice) {
-	 if (compilation!=null) {
-		 for (int i=0;i<compilation.size();i++) {
-				if(compilation.get(i).getCodiceBrano().equals(codice))
-				System.out.println(""+compilation.get(i).getTitoloBrano());}
+		} else {
+			System.out.println("brano non trovato");
 
-		 }	 else {System.out.println("brano non trovato");
-	 
-	 
-		 }
- }
- 
+		}
+	}
 
-public String getAutore() {
+	public String getAutore() {
 		return autore;
 	}
 
@@ -84,11 +93,11 @@ public String getAutore() {
 	}
 
 	public String getTitoloCd() {
-		return titolo_Cd;
+		return titoloCd;
 	}
 
-	public void setTitolo_Cd(String titolo_Cd) {
-		this.titolo_Cd = titolo_Cd;
+	public void setTitoloCd(String titolo_Cd) {
+		this.titoloCd = titolo_Cd;
 	}
 
 	public ArrayList<Brano> getCompilation() {
@@ -99,30 +108,30 @@ public String getAutore() {
 		this.compilation = compilation;
 	}
 
-
 	@Override
 	public String toString() {
-		return String.format("Cd [codiceCd=%s,  titolo_Cd= %s, autore= %s, durata del CD= %s, numero brani all'interno del CD= %d", getCodiceCd(),getTitoloCd(),getAutore(),getDurataCdSecondi(),getCompilation().size());
-				
+		return String.format(
+				"Cd [codiceCd=%s,  titolo_Cd= %s, autore= %s, durata del CD= %s, numero brani all'interno del CD= %d",
+				getCodiceCd(), getTitoloCd(), getAutore(), getDurataCdString(), getCompilation().size());
+
 	}
-
-
-	public Time getDurataCdSecondi() {
-		return durataCdSecondi;
+//TODO JAVADOC
+	public Time getDurataCd() {
+		return durataCd;
 	}
-
+	
+	public String getDurataCdString() {
+		byte ora = (byte) (durataCd.getHours() - 1);
+		return String.format("%02d:%02d:%02d", ora, durataCd.getMinutes(), durataCd.getSeconds());
+	}
 
 	public void setDurataCd(Time durataCdSecondi) {
-		this.durataCdSecondi = durataCdSecondi;
+		this.durataCd = durataCdSecondi;
 	}
-	@Deprecated
-	public void setDurataCdSecondi(int durataCdSecondi) {
-		setDurataCd(new Time(durataCdSecondi*1000)) ;
-	}
-   
-	
-	
-	
 
+	
+	public void setDurataCdSecondi(int durataCdSecondi) {
+		setDurataCd(new Time(durataCdSecondi * 1000));
+	}
 
 }

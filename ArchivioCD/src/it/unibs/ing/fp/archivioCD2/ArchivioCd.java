@@ -3,6 +3,8 @@ package it.unibs.ing.fp.archivioCD2;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.management.InstanceNotFoundException;
+
 public class ArchivioCd {
    
     
@@ -43,14 +45,14 @@ public class ArchivioCd {
 		return null;
 	 }  
 	
-	public Cd cercaCd (Cd cd) {
+	public int cercaCd (Cd cd) throws InstanceNotFoundException {
 		if (tuttiMieiCd!=null) {
 			 for (int i=0;i<tuttiMieiCd.size();i++) {
 					if(tuttiMieiCd.get(i).equals(cd))
-					return tuttiMieiCd.get(i);}
+					return i;}
 
 			 }	
-		return null;
+		throw new InstanceNotFoundException("CD NOT FOUND");
 	}
 	
 	public Cd cercaCdCodice(String codice) {
