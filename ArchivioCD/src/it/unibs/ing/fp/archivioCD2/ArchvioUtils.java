@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.archivioCD2;
 
+import util.mylib.InputDati;
+
 public class ArchvioUtils {
 	
 	public final static char CD = 'c';
@@ -7,7 +9,7 @@ public class ArchvioUtils {
 	
 	public static boolean CDoBrano(String messaggio) {
 		String mioMessaggio = messaggio + "(" + BRANO_SINGOLO  + "/" + CD + ")";
-		char valoreLetto = leggiUpperChar(mioMessaggio, String.valueOf(BRANO_SINGOLO) + String.valueOf(CD));
+		char valoreLetto = InputDati.leggiUpperChar(mioMessaggio, String.valueOf(BRANO_SINGOLO) + String.valueOf(CD));
  /// che caovlo succede   
 		if (valoreLetto == BRANO_SINGOLO)
 			return true;

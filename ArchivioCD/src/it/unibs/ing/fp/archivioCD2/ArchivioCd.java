@@ -19,32 +19,10 @@ public class ArchivioCd {
 			
 		}
 
-	public void eliminaCd(Cd titoloCd) {
-		if (tuttiMieiCd!=null) {
-		for (int i=0;i<tuttiMieiCd.size();i++) {
-			if(tuttiMieiCd.get(i).getTitolo_Cd().equals(titoloCd))
-				tuttiMieiCd.remove(i);
-			    System.out.println("il cd è stato rimosso da archivio");
-			}
+	public boolean eliminaCd(Cd cd) {
+		//TODO
+	}
 		
-		}else {System.out.println("non sono presenti cd in archivio");	
-		}
-		}
-		
-	 public void visualizzaCd(Cd titolo ) {
-		 if (tuttiMieiCd!=null) {
-			 for (int i=0;i<tuttiMieiCd.size();i++) {
-				if(tuttiMieiCd.get(i).getTitolo_Cd().equals(titolo))
-					    tuttiMieiCd.get(i).getTitolo_Cd();
-						System.out.println(tuttiMieiCd.get(i).getTitolo_Cd());
-					    //if(tuttiMieiCd.get(i).getCompilation()!=null) // no no non stampare tutto qui facciamo una stampa del contenuto di un cd a parte 
-					   
-					}
-
-			 }	 else {System.out.println("cd non presente in archivio");
-		 }
-	 
-	 }
 
 	 @Override
 	public String toString() {
@@ -55,21 +33,47 @@ public class ArchivioCd {
 
 
 
-	public void cercaCd(Cd codice) {
+	public Cd cercaCdTitolo(String titolo) {
+		 if (tuttiMieiCd!=null) {
+			 for (int i=0;i<tuttiMieiCd.size();i++) {
+					if(tuttiMieiCd.get(i).getTitoloCd().equals(titolo))
+					return tuttiMieiCd.get(i);}
+
+			 }	
+		return null;
+	 }  
+	
+	public Cd cercaCd (Cd cd) {
+		if (tuttiMieiCd!=null) {
+			 for (int i=0;i<tuttiMieiCd.size();i++) {
+					if(tuttiMieiCd.get(i).equals(cd))
+					return tuttiMieiCd.get(i);}
+
+			 }	
+		return null;
+	}
+	
+	public Cd cercaCdCodice(String codice) {
 		 if (tuttiMieiCd!=null) {
 			 for (int i=0;i<tuttiMieiCd.size();i++) {
 					if(tuttiMieiCd.get(i).getCodiceCd().equals(codice))
-					System.out.println(""+tuttiMieiCd.get(i).getTitolo_Cd());}
+					return tuttiMieiCd.get(i);}
 
-			 }	 else {System.out.println("codice brano inesistente");}
+			 }	
+		return null;
 	 }  
 	
-	public void contentutoCd(Cd titolo) {
-	  visualizzaCd(titolo);
-	  for(int i =0; i<tuttiMieiCd.get(i).getCompilation().size();i++)
-		  if(tuttiMieiCd.get(i).getCompilation()!=null)
-		  System.out.println(tuttiMieiCd.get(i).getCompilation().get(i).getTitoloBrano());
-		  else System.out.println("il cd  è vuoto");
+	public String visualizzaCd(Cd cercato) {
+		Cd cd1 =cercaCdCodice(cercato.getCodiceCd());
+		if(cd1!=null) {
+			return cd1.toString();
+		}
+		return null;
+//	  visualizzaCd(titolo);
+//	  for(int i =0; i<tuttiMieiCd.get(i).getCompilation().size();i++)
+//		  if(tuttiMieiCd.get(i).getCompilation()!=null)
+//		  System.out.println(tuttiMieiCd.get(i).getCompilation().get(i).getTitoloBrano());
+//		  else System.out.println("il cd  è vuoto");
 	}
 	  
      public void formattaCd(Brano playlist)

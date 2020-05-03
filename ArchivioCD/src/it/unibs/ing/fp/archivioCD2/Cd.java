@@ -2,29 +2,26 @@ package it.unibs.ing.fp.archivioCD2;
 
 import java.sql.Time;
 import java.util.ArrayList;
-
-
  
 public class Cd {
     
 	private String autore;
-	private static Time durataCdSecondi ;
+	private  Time durataCdSecondi ;
 	private String titolo_Cd;
 	private ArrayList<Brano> compilation;
    
 	private String codiceCd;
-	private int progressivo = 0;
-	private int _durataCdSecondi;
+	private static int progressivo = 0;
+	
 	
 	public Cd(String _titoloCd, String _autore) {
 		compilation = new ArrayList<Brano>();
-		this.titolo_Cd = _titoloCd;
-		this.autore = _autore;
-		this.progressivo++;
+		setTitolo_Cd(_titoloCd);
+		setAutore(_autore);
+		progressivo++;
 
-		this.codiceCd = Cd.class.getSimpleName() + progressivo;
-		this.durataCdSecondi =new Time(_durataCdSecondi*1000) ;	
-
+		setCodiceCd();
+		setDurataCd(durataCdSecondi);	
 	}
 	
 	
@@ -32,7 +29,9 @@ public String getCodiceCd() {
 		return codiceCd;
 	}
 
-
+private void setCodiceCd() {
+	this.codiceCd = Cd.class.getSimpleName() + progressivo;
+}
 	
 
 
@@ -41,17 +40,15 @@ public void aggiuntaBrano(Brano Brano) {
 		
 	}
 
-public void eliminaBrano(Brano titolo) {
+public boolean eliminaBrano(String titolo) {
 	if (compilation!=null) {
 	for (int i=0;i<compilation.size();i++) {
 		if(compilation.get(i).getTitoloBrano().equals(titolo))
 			compilation.remove(i);
-		    i--;
-		    System.out.println("il brano è stato rimosso dalla compilation");
+		    return true;
 		}
+	return false;
 	
-	}else {System.out.println("non sono presenti Brani nella compilation");	
-	}
 	}
 	
  public void visualizzaBrano(Brano titolo) {
@@ -65,7 +62,7 @@ public void eliminaBrano(Brano titolo) {
  
  }
 
- public void cercaBrano(Brano codice) {
+ public void cercaBrano(String codice) {
 	 if (compilation!=null) {
 		 for (int i=0;i<compilation.size();i++) {
 				if(compilation.get(i).getCodiceBrano().equals(codice))
@@ -86,7 +83,7 @@ public String getAutore() {
 		this.autore = autore;
 	}
 
-	public String getTitolo_Cd() {
+	public String getTitoloCd() {
 		return titolo_Cd;
 	}
 
@@ -105,8 +102,22 @@ public String getAutore() {
 
 	@Override
 	public String toString() {
-		return "Cd [autore=" + autore + ", titolo_Cd=" + titolo_Cd + ", compilation=" + compilation + ", codiceCd="
-				+ codiceCd + ", progressivo=" + progressivo + ", _durataCdSecondi=" + _durataCdSecondi + "]";
+		return String.format("Cd [codiceCd=%s,  titolo_Cd= %s, autore= %s, durata del CD= %s, numero brani all'interno del CD= %d", getCodiceCd(),getTitoloCd(),getAutore(),getDurataCdSecondi(),getCompilation().size());
+				
+	}
+
+
+	public Time getDurataCdSecondi() {
+		return durataCdSecondi;
+	}
+
+
+	public void setDurataCd(Time durataCdSecondi) {
+		this.durataCdSecondi = durataCdSecondi;
+	}
+	@Deprecated
+	public void setDurataCdSecondi(int durataCdSecondi) {
+		setDurataCd(new Time(durataCdSecondi*1000)) ;
 	}
    
 	
