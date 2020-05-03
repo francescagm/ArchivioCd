@@ -71,8 +71,8 @@ private static int progressivo=0;
 				+ ", durataBranoSecondi=" + durataBranoSecondi + "]";
 	}
 
- 
+        
+   
 
-
-	
+	   
 }

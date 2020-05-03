@@ -8,7 +8,7 @@ public class ArchvioUtils {
 	public static boolean CDoBrano(String messaggio) {
 		String mioMessaggio = messaggio + "(" + BRANO_SINGOLO  + "/" + CD + ")";
 		char valoreLetto = leggiUpperChar(mioMessaggio, String.valueOf(BRANO_SINGOLO) + String.valueOf(CD));
-
+ /// che caovlo succede 
 		if (valoreLetto == BRANO_SINGOLO)
 			return true;
 		else
