@@ -60,9 +60,9 @@ private static int progressivo=0;
 	
 		this.durataBranoSecondi = durataBranoSecondi;
 	}
-
-
-
+   
+       
+   
 
 
 	@Override

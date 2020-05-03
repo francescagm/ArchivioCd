@@ -11,7 +11,7 @@ public class Cd {
 	private static Time durataCdSecondi ;
 	private String titolo_Cd;
 	private ArrayList<Brano> compilation;
-
+   
 	private String codiceCd;
 	private int progressivo = 0;
 	private int _durataCdSecondi;
