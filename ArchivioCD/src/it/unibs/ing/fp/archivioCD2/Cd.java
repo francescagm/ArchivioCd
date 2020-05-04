@@ -1,7 +1,9 @@
 package it.unibs.ing.fp.archivioCD2;
 
+
 import java.sql.Time;
 import java.util.ArrayList;
+
 
 public class Cd {
 
@@ -17,7 +19,6 @@ public class Cd {
 		setTitoloCd(_titoloCd);
 		setAutore(_autore);
 		progressivo++;
-
 		setCodiceCd();
 		setDurataCdSecondi(0);
 	}
@@ -31,59 +32,123 @@ public class Cd {
 	}
 
 	public void aggiuntaBrano(Brano Brano) {
-	//TODO
+		
 		compilation.add(Brano);
-
+		setDurataCdSecondi((getDurataCd() + Brano.getDurataBrano()));
 	}
 
-	public boolean eliminaBrano(String titolo) {
-		if (!compilation.isEmpty()) {
+	/**
+	 * <b>Elimina</b> un {@linkplain Brano} cercandolo per <b>titolo</b>
+	 * 
+	 * @return <tt>true</tt> se la eliminazione e' andata a buon fine,
+	 *         <tt>false</tt> altrimenti
+	 * @param titolo
+	 *            e' il <b>titolo</b> da ricercare
+	 *            @author Simone
+	 */
+	//TODO da ripensare
+	public boolean eliminaBranoPerTitolo(String titolo) {
+		byte quanteCanzoni = (byte) compilation.size();
+		if (quanteCanzoni != 0) {
 			for (int i = 0; i < compilation.size(); i++) {
 				if (compilation.get(i).getTitoloBrano().equals(titolo)) {
 					compilation.remove(i);
-					return true;
+					setDurataCdSecondi(getDurataCd() - compilation.get(i).getDurataBrano());
+					i--;
 				}
 			}
+			return (quanteCanzoni != compilation.size());
 		}
 		return false;
+	}
 
-	}
-	//TODO
-	public Brano cercaBrano(Brano brano) {
-		for (Brano br : compilation) {
-			br.equals(brano);
-			return null;
+	/**
+	 * <b>Cerca </b>un {@linkplain Brano} nella {@linkplain #compilation}
+	 * 
+	 * @return la <b>posizione </b>del {@linkplain Brano} cercato
+	 * @param brano
+	 *            e' il {@linkplain Brano} da cercare
+	 *            @author Simone
+	 */
+	@Deprecated
+	public int cercaBrano(Brano brano) {
+
+		for (Brano _brano : compilation) {
+			if (_brano.equals(brano)) {
+				return compilation.indexOf(_brano);
+			}
 		}
-		return null;
-		
+		return -1;
 	}
-	
-	public void visualizzaBrano(Brano titolo) {
-		if (compilation != null) {
+
+	/**
+	 * <b>Cerca </b>un {@linkplain Brano} nella {@linkplain #compilation} per <tt>titolo</tt>
+	 * 
+	 * @return un {@linkplain ArrayList} con all'interno tutti i {@linkplain Brano}
+	 *         trovati
+	 * @param titolo
+	 *            e' il <b>titolo</b> da ricercare
+	 *            @author Simone
+	 */
+	public ArrayList<Brano> cercaBranoPerTitolo(String titolo) {
+		ArrayList<Brano> braniTrovati = new ArrayList<Brano>();
+		if (compilation.size() != 0) {
 			for (int i = 0; i < compilation.size(); i++) {
-				if (compilation.get(i).getTitoloBrano().equals(titolo))
-					System.out.println("" + compilation.get(i));
+				if (compilation.get(i).getTitoloBrano().equals(titolo)) {
+					braniTrovati.add(compilation.get(i));
+				}
 			}
 
-		} else {
-			System.out.println("brano non trovato");
 		}
-
+		return braniTrovati;
 	}
-
-	public void cercaBrano(String codice) {
-		if (compilation != null) {
+	/**
+	 * 
+	 * <b>Cerca </b>un {@linkplain Brano} nella {@linkplain #compilation} per <tt>cantante</tt>
+	 * 
+	 * @return un {@linkplain ArrayList} con all'interno tutti i {@linkplain Brano}
+	 *         trovati
+	 * @param cantante
+	 *            e' il <b>cantante</b> da ricercare
+	 *            @author Simone
+	 */
+	public ArrayList<Brano> cercaBranoPerCantante(String cantante) {
+		ArrayList<Brano> braniTrovati = new ArrayList<Brano>();
+		if (compilation.size() != 0) {
 			for (int i = 0; i < compilation.size(); i++) {
-				if (compilation.get(i).getCodiceBrano().equals(codice))
-					System.out.println("" + compilation.get(i).getTitoloBrano());
+				if (compilation.get(i).getCantante().equals(cantante)) {
+					braniTrovati.add(compilation.get(i));
+				}
 			}
 
-		} else {
-			System.out.println("brano non trovato");
-
 		}
+		return braniTrovati;
+	}
+/**<b>Visualizzazione </b>dei {@linkplain Brano} cercati per titolo.
+ * @return un <tt>array</tt> di {@linkplain Strig}, contenente le specifiche del {@linkplain Brano}
+ * @param titoloBrano e' il titolo del {@linkplain Brano} da visualizzare
+ * @author Simone*/
+	public String[] visualizzaBranoPerTitolo(String titoloBrano) {
+			ArrayList<Brano> braniTrovati=cercaBranoPerTitolo(titoloBrano);
+			ArrayList<String> stringaBranoTrovato=new ArrayList<>();
+			for (Brano brano : braniTrovati) {
+			stringaBranoTrovato.add(brano.toString());
+			}
+			return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
 	}
 
+	/**<b>Visualizzazione </b>dei {@linkplain Brano} cercati per <tt>cantante</tt>.
+	 * @return un <tt>array</tt> di {@linkplain Strig}, contenente le specifiche del {@linkplain Brano}
+	 * @param cantanteBrano e' il cantante del {@linkplain Brano} da visualizzare
+	 * @author Simone*/
+		public String[] visualizzaBranoPerCantante(String cantanteBrano) {
+				ArrayList<Brano> braniTrovati=cercaBranoPerCantante(cantanteBrano);
+				ArrayList<String> stringaBranoTrovato=new ArrayList<>();
+				for (Brano brano : braniTrovati) {
+				stringaBranoTrovato.add(brano.toString());
+				}
+				return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
+		}
 	public String getAutore() {
 		return autore;
 	}
@@ -115,23 +180,22 @@ public class Cd {
 				getCodiceCd(), getTitoloCd(), getAutore(), getDurataCdString(), getCompilation().size());
 
 	}
-//TODO JAVADOC
-	public Time getDurataCd() {
-		return durataCd;
+
+	/**
+	 * @return un <tt>long</tt> rappresentante i secondi dell'attributo
+	 *         {@linkplain #durataCd}
+	 */
+	public long getDurataCd() {
+		return durataCd.getTime() / 1000;
 	}
-	
+
 	public String getDurataCdString() {
 		byte ora = (byte) (durataCd.getHours() - 1);
 		return String.format("%02d:%02d:%02d", ora, durataCd.getMinutes(), durataCd.getSeconds());
 	}
 
-	public void setDurataCd(Time durataCdSecondi) {
-		this.durataCd = durataCdSecondi;
-	}
-
-	
-	public void setDurataCdSecondi(int durataCdSecondi) {
-		setDurataCd(new Time(durataCdSecondi * 1000));
+	public void setDurataCdSecondi(long durataCdSecondi) {
+		this.durataCd = new Time(durataCdSecondi*1000);
 	}
 
 }
