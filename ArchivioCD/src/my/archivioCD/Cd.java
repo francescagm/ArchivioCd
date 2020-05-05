@@ -33,7 +33,7 @@ public class Cd {
 		this.codiceCd = Cd.class.getSimpleName() + progressivo;
 	}
 
-	public void aggiungiBrano(Brano Brano) {
+	public void aggiungiBrano(Brano Brano) {  // di la era aggiunta ...però va be
 
 		compilation.add(Brano);
 		setDurataCdSecondi((getDurataCd() + Brano.getDurataBrano()));
@@ -83,7 +83,7 @@ public class Cd {
 	 * @author Simone
 	 */
 
-	public int cercaBrano(Brano brano) {
+	public int cercaBrano(Brano brano) { // questo chiaro
 
 		for (Brano _brano : compilation) {
 			if (_brano.equals(brano)) {
@@ -171,6 +171,11 @@ public class Cd {
 		}
 		return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
 	}
+	
+//**<b>Visualizzazione </b>dell {@linkplain Cd} contiene la collezzione di brani
+//	 * @return un <tt>array</tt> di {@linkplain Brani}, contenente le specifiche del {@linkplain Cd}
+//	 * 
+//	 * @author Simone*/
 
 	public String[] visualizzaInteraCollezione() {
 
@@ -216,7 +221,7 @@ public class Cd {
 	 * @return una {@linkplain String} con le specifiche di {@linkplain Cd} e con
 	 *         tutti i {@linkplain Brano} presenti
 	 */
-	public String toStringCollection() {
+	public String toStringCollection() {  // questo su cd ?
 		StringBuilder fine =new StringBuilder();
 		fine.append(toString());
 		fine.append(System.lineSeparator()+"Contiene:"+System.lineSeparator());
