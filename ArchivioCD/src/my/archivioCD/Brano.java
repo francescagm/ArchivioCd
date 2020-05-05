@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.archivioCD2;
+package my.archivioCD;
 
 import java.sql.Time;
 
@@ -10,17 +10,16 @@ public class Brano {
 	private String cantante;
 	private Time durataBranoSecondi;// in millisecondi
 
-	@Deprecated
-	public Brano(String _titoloBrano, String _cantante, Time _durataBranoSecondi) {
-		// TODO da pensare bene
-	}
-
 	public Brano(String _titoloBrano, String _cantante, int _durataBranoSecondi) {
 		setTitoloBrano(_titoloBrano);
 		setDurataBranoSecondi(_durataBranoSecondi);
 		setCantante(_cantante);
-		progressivo++;
 		setCodiceBrano();
+		progressivo++;
+	}
+
+	public Brano(String titoloBrano, String cantante, int minuti, int secondi) {
+		this(titoloBrano, cantante, minuti *60+ secondi);
 	}
 
 	public String getCodiceBrano() {
@@ -59,12 +58,6 @@ public class Brano {
 		this.durataBranoSecondi = new Time(durataBranoSecondi * 1000);
 	}
 
-	@Deprecated
-	public void setDurataBranoSecondi(Time durataBranoSecondi) {
-		// TODO da pensare bene
-		this.durataBranoSecondi = durataBranoSecondi;
-	}
-
 	public String getCantante() {
 		return cantante;
 	}
@@ -77,17 +70,15 @@ public class Brano {
 		this.codiceBrano = Brano.class.getSimpleName() + progressivo;
 	}
 
-	@Override
 	public String toString() {
-		return String.format("Brano [codiceBrano= %s, titoloBrano= %s, cantante= %s, durataBranoSecondi= %s]",
-				codiceBrano, titoloBrano, cantante, getDurataBranoString());
+		return String.format("Il Brano %s, interpretato da %s, che dura %s. Il suo codiceUnivoco e' %s", titoloBrano.toUpperCase(),
+				cantante, getDurataBranoString(), codiceBrano);
 	}
 
 	public boolean equals(Brano brano) {
 		return this.titoloBrano.compareTo(brano.titoloBrano) == 0
 				&& this.codiceBrano.compareTo(brano.getCodiceBrano()) == 0
-				&& this.cantante.compareTo(brano.getCantante()) == 0 && 
-				this.getDurataBrano() == brano.getDurataBrano();
+				&& this.cantante.compareTo(brano.getCantante()) == 0 && this.getDurataBrano() == brano.getDurataBrano();
 	}
 
 }

@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.archivioCD2;
+package my.archivioCD;
 
 
 
@@ -8,21 +8,22 @@ import util.mylib.MyMenu;
 
 
 public class ManageArchivio {
-	private final static String[] VOCI = {  };
-	private final static String TITOLO = " ";
+	private final static String[] VOCI = {"Aggiungi CD","Aggiungi un Brano","Rimuovi un CD","Rimuovi un Brano","Visualizza Brani","Visualizza Cd", "Visualizza Tutto"};
+	private final static String TITOLO = "ARCHIVIO CD";
 	
-	ArchivioCd archivioMusicale = new ArchivioCd(null);
+	ArchivioCd archivioMusicale = new ArchivioCd();
 	  
 	MyMenu menu = new MyMenu(TITOLO,VOCI);{
-	 
-		
-		 
+
 			int scelta = 0;
-			scelta = menu.scegli();
+			scelta = menu.scegli();//okay ottimo allora
+			 /*- fare JAVADOC di tutto, MA CHE CAZZ DICI si ma manca non è completo, è solo parziale		
+			  -manca menù
+			   */
 			switch (scelta) {
 			case 1:
-			    System.out.println("visualizza la mia collezione musicale");
-				archivioMusicale.visualizzaCd(null);
+			    archivioMusicale.aggiuntaCd();
+				);
 				System.out.println("vuoi ordinare le collezzione per titolo o per codice ");
 				// uso delle due opzioni 
 				InputDati.yesOrNo("vuoi ordinare la collezzione per titolo Cd");
