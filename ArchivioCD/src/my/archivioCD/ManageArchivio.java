@@ -1,75 +1,109 @@
 package my.archivioCD;
 
-
-
-
 import util.mylib.InputDati;
 import util.mylib.MyMenu;
 
-
 public class ManageArchivio {
-	private final static String[] VOCI = {"Aggiungi CD","Aggiungi un Brano","Rimuovi un CD","Rimuovi un Brano","Visualizza Brani","Visualizza Cd", "Visualizza Tutto"};
+	private static final String IMPOSSIBILE_INSERIRE_BRANO = "spiacente nessun cd all'interno dell'archivio musicale\n impossibile inserire un brano \n inserire prima un cd ";
+	private final static String[] VOCI = { "Aggiungi CD", "Aggiungi un Brano", "Rimuovi un CD", "Rimuovi un Brano",
+			"Visualizza Brani", "Visualizza Cd", "Visualizza Tutto" };
 	private final static String TITOLO = "ARCHIVIO CD";
-	
-	ArchivioCd archivioMusicale = new ArchivioCd();
-	  
-	MyMenu menu = new MyMenu(TITOLO,VOCI);{
+	private static final String REINSERIRE = "voi tentare di nuovo l'inserimento ?";
+	private static final String ELIMINA ="1--> elimina per titolo\n2-->elimina per autore" ;
 
-			int scelta = 0;
-			scelta = menu.scegli();//okay ottimo allora
-			 /*- fare JAVADOC di tutto, MA CHE CAZZ DICI si ma manca non è completo, è solo parziale		
-			  -manca menù
-			   */
-			switch (scelta) {
-			case 1:
-			    archivioMusicale.aggiuntaCd();
-				);
-				System.out.println("vuoi ordinare le collezzione per titolo o per codice ");
-				// uso delle due opzioni 
-				InputDati.yesOrNo("vuoi ordinare la collezzione per titolo Cd");
-			    
-				break;
-			case 2:
-				System.out.println("vuoi aggiornare le tua collezione");
-				System.out.println("vuoi aggiungere un brano ad un cd esistente oppure vuoi agigungere nuovo cd");
-				// uso delle due opzioni
-				break;
-			
-			case 3: 
-				System.out.println("vuoi rimuovere un brano o un cd");
-			     // uso delle due opzioni // uso del si o no per conferma ricerca per titolo o per autore 
-				break;
-			case 4:
-				 
-				 System.out.println("riproduzione di un brano shuffe");
-				 break;
-			default:
-				break;}
-	}
-			
-		  	
-	    
-       
+	ArchivioCd archivioMusicale = new ArchivioCd();
+
+	MyMenu menu = new MyMenu(TITOLO, VOCI);
+	{
+
+		int scelta = 0;
+		scelta = menu.scegli();
 		
 		
-		public static Brano creaBrano() {
-		
-		String titoloBrano = InputDati.leggiStringaNonVuota("inserisci titolo del brano musicale");
-	    String cantante = InputDati.leggiStringaNonVuota("inserisci cantanti ");
-	    int  durataBranoSecondi = InputDati.leggiInteroPositivo("inserisci durata del brano");
-		return new Brano(titoloBrano,cantante,durataBranoSecondi);
-	}
-	
-	
-	    public static Cd creaCd() {
-		String titolo_Cd =InputDati.leggiStringaNonVuota("inserisci titolo del Cd "); ;
-		String autore = InputDati.leggiStringaNonVuota("inserisci nome Editore ");;
-         return new Cd(titolo_Cd,autore);
-	}
-	
-	
+
+		switch (scelta) {
+		case 1:
+
+			Cd nuovoCd = ArchvioUtils.creaCD();
+			try {
+				archivioMusicale.aggiungiCd(nuovoCd);
+
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+				while (InputDati.yesOrNo(REINSERIRE)) {
+
+				}
+
 			}
 
+			break;
+		case 2:
+			String[] intera_collezione = archivioMusicale.visualizzaInteraCollezione();
+			if (intera_collezione != null || intera_collezione.length > 0) {
+				for (int i = 0; i < intera_collezione.length; i++) {
+					System.out.println(i + "-->" + intera_collezione[i]);
+				}
+				int sceltaCollezione = InputDati.leggiIntero("scegli il cd dove inserire il brano ", 0,
+						intera_collezione.length - 1);
+				archivioMusicale.getArchivio().get(sceltaCollezione).aggiungiBrano(ArchvioUtils.creaBrano());
+			}else {System.out.println(IMPOSSIBILE_INSERIRE_BRANO);}
+ 
+			break;
+
+		case 3:
+			
+			break;
+		case 4:
+
+			System.out.println("riproduzione di un brano shuffe");
+			break;
+		default:
+			break;
+		}
+	}
+		public void eliminaCd() {
+			switch (InputDati.leggiIntero(ELIMINA, 1, 2)) {
+			case 1 : {
+				String titoloDaEliminare = InputDati.leggiStringaNonVuota("inserisci il titolo del CD da eliminare: ");
+			
+				boolean haEliminato =archivioMusicale.eliminaCd(titoloDaEliminare);
+				if(haEliminato) {System.out.println("cd eliminato con successo ");}
+				else {System.out.println("titolo non trovato ");}
+				
+				break;}
+			case 2 :  
+			    String autoreDaEliminare = InputDati.leggiStringaNonVuota("inserisci nome autore cd da eliminare: ");
+			    String [] cdPerAutore = archivioMusicale.visualizzaCdPerAutore(autoreDaEliminare);
+			    if (cdPerAutore!=null||cdPerAutore.length>0) {
+			    	for (int i = 0; i < cdPerAutore.length; i++) {
+			    		System.out.println(i+"-->"+cdPerAutore[i]);
+						}
+			     System.out.println(cdPerAutore.length+"-->"+"elimina tutti");
+			     int sceltaEliminazione = InputDati.leggiIntero("scelta opzione", 0, cdPerAutore.length);
+			     if(sceltaEliminazione == cdPerAutore.length)
+			    	 archivioMusicale.eliminaCDPerAutore(autoreDaEliminare);
+			     else archivioMusicale.getArchivio().remove(sceltaEliminazione);
+			     
+			     
+			     
+			     
+			    }
+			    
+			    
+			    
+//			    boolean haEliminato =archivioMusicale.eliminaCd(autoreDaEliminare);
+//			    if(haEliminato) {System.out.println("cd eliminato con successo ");}
+//			    else {System.out.println("titolo non trovato ");}
+			
+				
+				
+			break;
+
+			default:
+				break;
+			}
+		}
+	
 	
 
-
+}

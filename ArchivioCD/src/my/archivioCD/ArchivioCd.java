@@ -6,6 +6,7 @@ import util.mylib.EstrazioniCasuali;
 
  public class ArchivioCd {
    
+	private static final String CD_ESISTENTE = "Nome del CD già esistente! Impossibile immeterlo";
 	private ArrayList<Cd> tuttiMieiCd;
 		public ArchivioCd () {
 			tuttiMieiCd=new ArrayList<>();
@@ -13,7 +14,7 @@ import util.mylib.EstrazioniCasuali;
 		}
 			public void aggiungiCd(Cd cdDaInserire) {
 			if(contiene(cdDaInserire.getTitolo()))
-				throw new IllegalArgumentException("Nome del CD già esistente! Impossibile immeterlo");
+				throw new IllegalArgumentException(CD_ESISTENTE);
 			tuttiMieiCd.add(cdDaInserire);
 		}
 			/**
@@ -127,7 +128,7 @@ import util.mylib.EstrazioniCasuali;
 				ArrayList<Cd> cdsTrovati=cercaCDPerTitolo(titoloCd);
 				ArrayList<String> stringaCdTrovato=new ArrayList<>();
 				for (Cd cds: cdsTrovati) {
-				stringaCdTrovato.add(cds.toString());
+				stringaCdTrovato.add(cds.belToString());
 				}
 				return stringaCdTrovato.toArray(new String[stringaCdTrovato.size()]);
 		}
@@ -140,7 +141,7 @@ import util.mylib.EstrazioniCasuali;
 					ArrayList<Cd> cdsTrovati=cercaCDPerAutore(autoreCd);
 					ArrayList<String> stringaCdTrovato=new ArrayList<>();
 					for (Cd cds: cdsTrovati) {
-					stringaCdTrovato.add(cds.toString());
+					stringaCdTrovato.add(cds.belToString());
 					}
 					return stringaCdTrovato.toArray(new String[stringaCdTrovato.size()]);
 			}
@@ -156,7 +157,7 @@ import util.mylib.EstrazioniCasuali;
 				
 				ArrayList<String> daVisualizzare=new ArrayList<>();
 				for (Cd cd : tuttiMieiCd) {
-					daVisualizzare.add(cd.toString());
+					daVisualizzare.add(cd.belToString());
 				}
 				return daVisualizzare.toArray(new String[daVisualizzare.size()]);
 			}
