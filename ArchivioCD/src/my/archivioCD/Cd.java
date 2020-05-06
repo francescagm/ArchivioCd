@@ -7,6 +7,7 @@ import util.mylib.EstrazioniCasuali;
 
 public class Cd {
 
+	private static final String SPAZIO_IN_CD_ESAURITO = "Brano troppo lungo, spazio in esaurimento; capaci\u00e0 disponibile=";
 	private String autore;
 	private Time durataCd;
 	private String titoloCd;
@@ -16,8 +17,9 @@ public class Cd {
 	/** {@value} */
 	public final static int DURATA_MASSIMA_CD_SECONDI = 4440;
 
-	public Cd(String _titoloCd, String _autore) {
+	public Cd(String _titoloCd, String _autore) {		
 		compilation = new ArrayList<Brano>();
+		compilation.clear();
 		setTitoloCd(_titoloCd);
 		setAutore(_autore);
 		setCodiceCd();
@@ -33,18 +35,11 @@ public class Cd {
 		this.codiceCd = Cd.class.getSimpleName() + progressivo;
 	}
 
-<<<<<<< HEAD
 	public void aggiungiBrano(Brano brano) {
 		if(cercaBrano(brano)!=-1)
 			throw new IllegalArgumentException("BRANO GIA' ESISTENTE IN QUESTO Cd");
 		compilation.add(brano);
 		setDurataCdSecondi((getDurataCd() + brano.getDurataBrano()));
-=======
-	public void aggiungiBrano(Brano Brano) {  // di la era aggiunta ...però va be
-
-		compilation.add(Brano);
-		setDurataCdSecondi((getDurataCd() + Brano.getDurataBrano()));
->>>>>>> branch 'master' of https://github.com/francescagm/ArchivioCd.git
 	}
 
 	/**<b>Elimina </b>tutti i {@linkplain Brano} passati nell'{@linkplain ArrayList} 
@@ -114,14 +109,14 @@ public class Cd {
 	 * @return un {@linkplain ArrayList} con all'interno tutti i {@linkplain Brano}
 	 *         trovati
 	 * @param titolo
-	 *            e' il <b>titolo</b> da ricercare
+	 *            e' il <b>titolo</b> da ricercare 
 	 * @author Simone
 	 */
 	public ArrayList<Brano> cercaBranoPerTitolo(String titolo) {
 		ArrayList<Brano> braniTrovati = new ArrayList<Brano>();
 
 		for (int i = 0; i < compilation.size(); i++) {
-			if (compilation.get(i).getTitoloBrano().equals(titolo)) {
+			if (compilation.get(i).getTitolo().equalsIgnoreCase(titolo)) {
 				braniTrovati.add(compilation.get(i));
 			}
 
@@ -143,7 +138,7 @@ public class Cd {
 	public ArrayList<Brano> cercaBranoPerCantante(String cantante) {
 		ArrayList<Brano> braniTrovati = new ArrayList<Brano>();
 		for (int i = 0; i < compilation.size(); i++) {
-			if (compilation.get(i).getCantante().equals(cantante)) {
+			if (compilation.get(i).getCantante().equalsIgnoreCase(cantante)) {
 				braniTrovati.add(compilation.get(i));
 			}
 		}
@@ -163,7 +158,7 @@ public class Cd {
 		ArrayList<Brano> braniTrovati = cercaBranoPerTitolo(titoloBrano);
 		ArrayList<String> stringaBranoTrovato = new ArrayList<>();
 		for (Brano brano : braniTrovati) {
-			stringaBranoTrovato.add(brano.toString());
+			stringaBranoTrovato.add(brano.belToString());
 		}
 		return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
 	}
@@ -181,23 +176,15 @@ public class Cd {
 		ArrayList<Brano> braniTrovati = cercaBranoPerCantante(cantanteBrano);
 		ArrayList<String> stringaBranoTrovato = new ArrayList<>();
 		for (Brano brano : braniTrovati) {
-			stringaBranoTrovato.add(brano.toString());
+			stringaBranoTrovato.add(brano.belToString());
 		}
 		return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
 	}
-<<<<<<< HEAD
+
 /**<b>Visualizza</b> l'intera {@linkplain #compilation} del {@linkplain Cd}
  * @return un <tt>array</tt> di {@linkplain Strig}
  * @author Simone 
  * */
-=======
-	
-//**<b>Visualizzazione </b>dell {@linkplain Cd} contiene la collezzione di brani
-//	 * @return un <tt>array</tt> di {@linkplain Brani}, contenente le specifiche del {@linkplain Cd}
-//	 * 
-//	 * @author Simone*/
-
->>>>>>> branch 'master' of https://github.com/francescagm/ArchivioCd.git
 	public String[] visualizzaInteraCollezione() {
 
 		ArrayList<String> daVisualizzare = new ArrayList<>();
@@ -215,7 +202,7 @@ public class Cd {
 		this.autore = autore;
 	}
 	/**@return l' {@linkplain #titoloCd} del {@linkplain Cd}*/
-	public String getTitoloCd() {
+	public String getTitolo() {
 		return titoloCd;
 	}
 
@@ -231,20 +218,32 @@ public class Cd {
 		this.compilation = compilation;
 	}
 
-	@Override
-	public String toString() {
+	/**@return una {@linkplain String} con le specifiche di {@linkplain Cd}
+	 * @see #toStringCollection()*/
+	public String belToString() {
 		return String.format(
 				"Il CD %s, il cui autore e' %s, di durata totale %s e contiene %d brani. Il suo codiceUnivoco e' %s",
 				titoloCd.toUpperCase(), autore, getDurataCdString(), compilation.size(), codiceCd);
+	}
+	/**<h5>UNUSED</h5><h1>metodo fatto solo per JUnit</h1>
+	 * @deprecated usare {@linkplain #belToString()}*/
+	public String toString() {
+		StringBuilder fine =new StringBuilder();
+		fine.append(String.format("Titolo: %s, Autore: %s, Lista dei brani: ", getTitolo(),getAutore()));
+		for (int i = 0; i < compilation.size(); i++) {
+			fine.append(compilation.get(i).toString());
+		}
+		return fine.toString();
+		
 	}
 
 	/**
 	 * @return una {@linkplain String} con le specifiche di {@linkplain Cd} e con
 	 *         tutti i {@linkplain Brano} presenti
 	 */
-	public String toStringCollection() {  // questo su cd ?
+	public String toStringCollection() { 
 		StringBuilder fine =new StringBuilder();
-		fine.append(toString());
+		fine.append(belToString());
 		fine.append(System.lineSeparator()+"Contiene:"+System.lineSeparator());
 		String[] collezione=visualizzaInteraCollezione();
 		for (String string : collezione) {
@@ -255,7 +254,7 @@ public class Cd {
 	}
 
 	public boolean equals(Cd cd_da_confrontare) {
-		return titoloCd.compareTo(cd_da_confrontare.getTitoloCd()) == 0
+		return titoloCd.compareTo(cd_da_confrontare.getTitolo()) == 0
 				&& autore.compareTo(cd_da_confrontare.getAutore()) == 0
 				&& codiceCd.compareTo(cd_da_confrontare.getCodiceCd()) == 0
 				&& compilation == cd_da_confrontare.getCompilation();
@@ -295,10 +294,15 @@ public class Cd {
 	}
 
 	private void setDurataCdSecondi(long durataCdSecondi) {
-		if (getDurataCd() + durataCdSecondi > Cd.DURATA_MASSIMA_CD_SECONDI)
-			throw new IllegalArgumentException(
-					"Brano troppo lungo, spazio in esaurimento; capaci\u00e0 disponibile=" + getSecondiRimasti());
+//		if (getDurataCd() + durataCdSecondi > Cd.DURATA_MASSIMA_CD_SECONDI)
+//			throw new IllegalArgumentException(
+//					SPAZIO_IN_CD_ESAURITO + getSecondiRimasti());
 		this.durataCd = new Time(durataCdSecondi * 1000);
+	}
+	/**@return <tt>true</tt> se il {@linkplain #titoloCd} del {@linkplain Cd} e' uguale alla {@linkplain String} passata per parametro
+	 * @param cercato, e' la {@linkplain String} da comparare*/
+	public boolean haTitolo(String cercato) {
+		return titoloCd.equalsIgnoreCase(cercato);
 	}
 
 }

@@ -7,16 +7,24 @@ import util.mylib.EstrazioniCasuali;
  public class ArchivioCd {
    
 	private ArrayList<Cd> tuttiMieiCd;
-		
-		public ArchivioCd() {
-			tuttiMieiCd=new ArrayList<Cd>();
+		public ArchivioCd () {
+			tuttiMieiCd=new ArrayList<>();
+			tuttiMieiCd.clear();
 		}
-
-			public void aggiuntaCd(Cd cdDaInserire) {
-			checkCdEsistente(cdDaInserire.getTitoloCd());
+			public void aggiungiCd(Cd cdDaInserire) {
+			if(contiene(cdDaInserire.getTitolo()))
+				throw new IllegalArgumentException("Nome del CD già esistente! Impossibile immeterlo");
 			tuttiMieiCd.add(cdDaInserire);
 		}
-
+			/**
+			 * <b>Elimina</b> un {@linkplain Cd} cercandolo per <b>titolo</b>
+			 * 
+			 * @return <tt>true</tt> se la eliminazione e' andata a buon fine,
+			 *         <tt>false</tt> altrimenti
+			 * @param titolo
+			 *            e' il <b>titolo</b> da ricercare
+			 *            @author Simone
+			 */
 		public boolean eliminaCds(ArrayList<Cd> cdDaEliminare) {// ma qui non ho capito li elimina tutti? non capisco in (cercaCd(cd)) che ricerca fa per brano
 			int cdAllInizio= tuttiMieiCd.size();
 			for (Cd cd: cdDaEliminare) {
@@ -24,31 +32,20 @@ import util.mylib.EstrazioniCasuali;
 			}
 			return (cdAllInizio-cdDaEliminare.size()==tuttiMieiCd.size());
 		}
-		/**
-		 * <b>Elimina</b> un {@linkplain Cd} cercandolo per <b>titolo</b>
-		 * 
-		 * @return <tt>true</tt> se la eliminazione e' andata a buon fine,
-		 *         <tt>false</tt> altrimenti
-		 * @param titolo
-		 *            e' il <b>titolo</b> da ricercare
-		 *            @author Simone
-		 */
+	
 		
-		private boolean checkCdEsistente(String titolo) {
-			if(cercaCDPerTitolo(titolo).isEmpty())
-				return true;
-			return false;
-//			/**
-//			 * <b>Elimina</b> un {@linkplain Cd} cercandolo per <b>titolo</b>
-//			 * 
-//			 * @return <tt>true</tt> se la eliminazione e' andata a buon fine,
-//			 *         <tt>false</tt> altrimenti
-//			 * @param titolo
-//			 *            e' il <b>titolo</b> da ricercare
-//			 * @author Simone			 */	
-//			
+		
+			/**
+			 * <b>Elimina</b> un {@linkplain Cd} cercandolo per <b>titolo</b>
+			 * 
+			 * @return <tt>true</tt> se la eliminazione e' andata a buon fine,
+			 *         <tt>false</tt> altrimenti
+			 * @param titolo
+			 *            e' il <b>titolo</b> da ricercare
+			 * @author Simone			 */	
+			
 		}
-		public boolean eliminaCDPerTitolo(String titolo) {
+		public boolean eliminaCd(String titolo) {
 			return eliminaCds(cercaCDPerTitolo(titolo));
 		}
 
@@ -73,11 +70,10 @@ import util.mylib.EstrazioniCasuali;
 		 *            @author Simone
 		 */
 		
-		public int cercaCd(Cd cdDaCercare) {// qui non capisco perchè qui mi torna la posizione del Brano ma non è la stessa cosa che fa cercaBrano():int nella classe cd ? forse perchè ho per quello il check cd ?
-                                            // praticmente mi resituisce la posizione del cd dove c'è brano... ma non capisco come fa se non gli passo anche compilation.size() nel senso che  non lo capisco io 
-			for (Cd _brano : tuttiMieiCd) {
-				if (_brano.equals(cdDaCercare)) {
-					return tuttiMieiCd.indexOf(_brano);
+		public int cercaCd(Cd cdDaCercare) {
+			for (Cd cd : tuttiMieiCd) {
+				if (cd.equals(cdDaCercare)) {
+					return tuttiMieiCd.indexOf(cd);
 				}
 			}
 			return -1;
@@ -96,7 +92,7 @@ import util.mylib.EstrazioniCasuali;
 			ArrayList<Cd> cdTrovati = new ArrayList<Cd>();
 			
 				for (int i = 0; i < tuttiMieiCd.size(); i++) {
-					if (tuttiMieiCd.get(i).getTitoloCd().equals(titolo)) {
+					if (tuttiMieiCd.get(i).getTitolo().equals(titolo)) {
 						cdTrovati.add(tuttiMieiCd.get(i));
 					}
 			
@@ -116,7 +112,7 @@ import util.mylib.EstrazioniCasuali;
 			ArrayList<Cd> cdTrovati = new ArrayList<Cd>();
 			
 				for (int i = 0; i < tuttiMieiCd.size(); i++) {
-					if (tuttiMieiCd.get(i).getTitoloCd().equals(autore)) {
+					if (tuttiMieiCd.get(i).getTitolo().equals(autore)) {
 						cdTrovati.add(tuttiMieiCd.get(i));
 					}
 			
@@ -149,12 +145,12 @@ import util.mylib.EstrazioniCasuali;
 					return stringaCdTrovato.toArray(new String[stringaCdTrovato.size()]);
 			}
 			
-//			
-//			/**<b>Visualizzazione </b>dell {@linkplain Archivio} .contiene collezione di tutti i cd in archivio
-//			 * @return un <tt>array</tt> di {@linkplain Cd}, contenente le specifiche del {@linkplain Cd}
-//			 * 
-//			 * @author Simone*/
-//			
+			
+			/**<b>Visualizzazione </b>dell {@linkplain Archivio} .contiene collezione di tutti i {@linkplain Cd}in archivio
+			 * @return un <tt>array</tt> di {@linkplain Cd}, contenente le specifiche del {@linkplain Cd}
+			 * 
+			 * @author Simone*/
+			
 			
 			public String[] visualizzaInteraCollezione() {
 				
@@ -165,7 +161,9 @@ import util.mylib.EstrazioniCasuali;
 				return daVisualizzare.toArray(new String[daVisualizzare.size()]);
 			}
 						
-			
+		public int getNumeroCd() {
+			return tuttiMieiCd.size();
+		}
 		
 		public ArrayList<Cd> getArchivio() {
 			return tuttiMieiCd;
@@ -174,7 +172,13 @@ import util.mylib.EstrazioniCasuali;
 		public void setArchivio(ArrayList<Cd> tuttiCdNuovi) {
 			this.tuttiMieiCd = tuttiCdNuovi;
 		}
-
+		/**Sono tutti i check che si devono superare pe aggiungere un nuovo {@linkplain Cd} 
+		 * @return true se tutti i check sono positivi, falso altrimenti
+		 * @see {@linkplain ArchivioCd#aggiungiCd(Cd)}*/
+		public boolean contiene(String titolo) {
+			return !cercaCDPerTitolo(titolo).isEmpty();
+			
+		}
 		@Override
 		public String toString() { // toStringColletion ?
 			return String.format(

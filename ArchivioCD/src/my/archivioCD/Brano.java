@@ -2,6 +2,8 @@ package my.archivioCD;
 
 import java.sql.Time;
 
+
+
 /** {@linkplain Class} che rappresenta un <b>brano musicale</b> */
 public class Brano {
 	private static int progressivo = 0;
@@ -19,10 +21,14 @@ public class Brano {
 	}
 
 	public Brano(String titoloBrano, String cantante, int minuti, int secondi) {
-		this(titoloBrano, cantante, minuti *60+ secondi);
+		this(titoloBrano, cantante, minuti * 60 + secondi);
 	}
 
-	public String getCodiceBrano() {
+	public Brano(String titoloBrano, int minuti, int secondi) {
+		this(titoloBrano, "", minuti, secondi);
+	}
+
+	public String getCodice() {
 		return codiceBrano;
 	}
 
@@ -45,7 +51,7 @@ public class Brano {
 		return durataBranoSecondi.getTime() / 1000;
 	}
 
-	public String getTitoloBrano() {
+	public String getTitolo() {
 		return titoloBrano;
 	}
 
@@ -70,15 +76,24 @@ public class Brano {
 		this.codiceBrano = Brano.class.getSimpleName() + progressivo;
 	}
 
+	public String belToString() {
+		return String.format("Il Brano %s, interpretato da %s, che dura %s. Il suo codiceUnivoco e' %s",
+				titoloBrano.toUpperCase(), cantante, getDurataBranoString(), codiceBrano);
+	}
+
+	/**<h5>UNUSED</h5><h1> metodo per test JUnit </h1>
+	 * @deprecated usare {@linkplain #belToString()}*/
+	
 	public String toString() {
-		return String.format("Il Brano %s, interpretato da %s, che dura %s. Il suo codiceUnivoco e' %s", titoloBrano.toUpperCase(),
-				cantante, getDurataBranoString(), codiceBrano);
+		
+		return String.format("%s [%02d:%02d] ",titoloBrano,durataBranoSecondi.getMinutes(),durataBranoSecondi.getSeconds());
 	}
 
 	public boolean equals(Brano brano) {
 		return this.titoloBrano.compareTo(brano.titoloBrano) == 0
-				&& this.codiceBrano.compareTo(brano.getCodiceBrano()) == 0
+				&& this.codiceBrano.compareTo(brano.getCodice()) == 0
 				&& this.cantante.compareTo(brano.getCantante()) == 0 && this.getDurataBrano() == brano.getDurataBrano();
+			
 	}
 
 }

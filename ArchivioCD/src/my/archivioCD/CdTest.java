@@ -1,11 +1,13 @@
-package it.unibs.ing.fp.cd;
+package my.archivioCD;
 
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
+
 
 public class CdTest {
 	private static final String TITOLO = "Anime salve";
@@ -17,6 +19,7 @@ public class CdTest {
 	}
 
 	@Test
+	
 	public void testToStringConBrani() throws Exception {
 		final Cd cd = new Cd(TITOLO, AUTORE);
 		cd.aggiungiBrano(new Brano("Anime salve", 5, 52));
@@ -28,18 +31,21 @@ public class CdTest {
 	}
 
 	@Test
+	
 	public void testHaTitoloTrue() throws Exception {
 		final Cd cd = new Cd(TITOLO, AUTORE);
 		assertTrue(cd.haTitolo(TITOLO));
 	}
 
 	@Test
+	
 	public void testHaTitoloFalse() throws Exception {
 		final Cd cd = new Cd(TITOLO, AUTORE);
 		assertFalse(cd.haTitolo("La buona novella"));
 	}
 
 	@Test
+	
 	public void testEstrazioneCasualeBrano() throws Exception {
 		final Cd cd = new Cd("_A Title_", "_An Author_");
 		final int numeroBrani = 10;

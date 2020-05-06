@@ -1,8 +1,9 @@
-package it.unibs.ing.fp.cd;
+package my.archivioCD;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
 
 public class ArchivioCdTest {
 	@Test
