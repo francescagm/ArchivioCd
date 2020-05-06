@@ -44,7 +44,7 @@ import util.mylib.EstrazioniCasuali;
 			 *            e' il <b>titolo</b> da ricercare
 			 * @author Simone			 */	
 			
-		}
+		
 		public boolean eliminaCd(String titolo) {
 			return eliminaCds(cercaCDPerTitolo(titolo));
 		}
