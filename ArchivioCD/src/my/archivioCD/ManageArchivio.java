@@ -95,23 +95,24 @@ public class ManageArchivio {
 				}
 				System.out.println(cdPerAutore.length + "-->" + "elimina tutti");
 				int sceltaEliminazione = InputDati.leggiIntero("scelta opzione", 0, cdPerAutore.length);
-
+				
 				if (sceltaEliminazione == cdPerAutore.length) {
-					if (archivioMusicale.eliminaCDPerAutore(autoreDaEliminare));{
-					System.out.println(ELIMINAZIONE_AVVENUTA);}}
-					else { System.out.println(PROBLEMI_DI_ELIMINAZIONE);}
+					if (archivioMusicale.eliminaCDPerAutore(autoreDaEliminare))
+					System.out.println(ELIMINAZIONE_AVVENUTA);
+					else System.out.println(PROBLEMI_DI_ELIMINAZIONE);
 				}else {
 					if (archivioMusicale.eliminaCd(archivioMusicale.cercaCDPerAutore(autoreDaEliminare).get(sceltaEliminazione)))
 						System.out.println(ELIMINAZIONE_AVVENUTA);
-				}		}
-//TODO   
+				}		
+				
+   
 			}
 
 	// boolean haEliminato =archivioMusicale.eliminaCd(autoreDaEliminare);
 	// if(haEliminato) {System.out.println("cd eliminato con successo ");}
 	// else {System.out.println("titolo non trovato ");}
 
-	break;
+	break;}
 
 	default:break;
 }}
