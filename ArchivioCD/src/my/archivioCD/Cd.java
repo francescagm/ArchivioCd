@@ -26,6 +26,19 @@ public class Cd {
 		durataCd = new Time(0);
 		progressivo++;
 	}
+	/**
+	 * costruttore di copia 
+	 * @param cdDacopiare
+	 */
+	public Cd (Cd cdDacopiare) {
+		setTitolo(cdDacopiare.getTitolo());
+		setAutore(cdDacopiare.getAutore());
+		setCodice();
+		progressivo++;
+		durataCd = cdDacopiare.durataCd;
+		compilation = cdDacopiare.compilation;
+	}
+	
 
 	public String getCodice() {
 		return codice;

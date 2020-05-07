@@ -1,6 +1,7 @@
 package my.archivioCD;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import util.mylib.EstrazioniCasuali;
 
@@ -182,6 +183,16 @@ import util.mylib.EstrazioniCasuali;
 						/**@return il {@linkplain Cd} in quella posizione*/
 			public Cd getCd(int index) {
 				return tuttiMieiCd.get(index);
+			}
+			
+			public String cercaBranoInArchivioPerTitolo(String titoloBrano) {
+				ArrayList<Cd> cdConBrano = new ArrayList<Cd>();
+				for (int i = 0; i < tuttiMieiCd.size(); i++) {
+					cdConBrano.
+					tuttiMieiCd.get(i).cercaBranoPerTitolo(titoloBrano);
+					
+				}
+				.
 			}
 			
 		public int getNumeroCd() {
