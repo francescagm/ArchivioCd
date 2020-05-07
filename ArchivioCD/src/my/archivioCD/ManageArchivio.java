@@ -4,6 +4,8 @@ import util.mylib.InputDati;
 import util.mylib.MyMenu;
 
 public class ManageArchivio {
+	private static final String PROBLEMI_DI_ELIMINAZIONE = "problemi in fase di eliminazione, probabile perdita di dati";
+	private static final String ELIMINAZIONE_AVVENUTA = "eliminazione avvenuta ";
 	private static final String IMPOSSIBILE_INSERIRE_BRANO = "spiacente nessun cd all'interno dell'archivio musicale\n impossibile inserire un brano \n inserire prima un cd ";
 	private final static String[] VOCI = { "Aggiungi CD", "Aggiungi un Brano", "Rimuovi un CD", "Rimuovi un Brano",
 			"Visualizza Brani", "Visualizza Cd", "Visualizza Tutto" };
@@ -22,7 +24,7 @@ public class ManageArchivio {
 
 		switch (scelta) {
 		case 1:
-			
+
 			inserisciCD();
 
 			break;
@@ -35,9 +37,9 @@ public class ManageArchivio {
 				int sceltaCollezione = InputDati.leggiIntero("scegli il cd dove inserire il brano ", 0,
 						intera_collezione.length - 1);
 				Brano branoDaInserire = ArchivioUtils.creaBrano();
-				//TODO
+				// TODO
 				archivioMusicale.getCd(sceltaCollezione).aggiungiBrano(branoDaInserire);
-				} else {
+			} else {
 				System.out.println(IMPOSSIBILE_INSERIRE_BRANO);
 			}
 
@@ -84,7 +86,7 @@ public class ManageArchivio {
 
 			break;
 		}
-		case 2:
+		case 2:{
 			String autoreDaEliminare = InputDati.leggiStringaNonVuota("inserisci nome autore cd da eliminare: ");
 			String[] cdPerAutore = archivioMusicale.visualizzaCdPerAutore(autoreDaEliminare);
 			if (cdPerAutore != null || cdPerAutore.length > 0) {
@@ -95,24 +97,23 @@ public class ManageArchivio {
 				int sceltaEliminazione = InputDati.leggiIntero("scelta opzione", 0, cdPerAutore.length);
 
 				if (sceltaEliminazione == cdPerAutore.length) {
-					if (archivioMusicale.eliminaCDPerAutore(autoreDaEliminare))
-						;
-					System.out.println("cd eliminato con successo ");
-				} else
-					archivioMusicale.eliminaCd(archivioMusicale.cercaCDPerAutore(autoreDaEliminare)
-							.subList(sceltaEliminazione, sceltaEliminazione + 1));
-//TODO
+					if (archivioMusicale.eliminaCDPerAutore(autoreDaEliminare));{
+					System.out.println(ELIMINAZIONE_AVVENUTA);}}
+					else { System.out.println(PROBLEMI_DI_ELIMINAZIONE);}
+				}else {
+					if (archivioMusicale.eliminaCd(archivioMusicale.cercaCDPerAutore(autoreDaEliminare).get(sceltaEliminazione)))
+						System.out.println(ELIMINAZIONE_AVVENUTA);
+				}		}
+//TODO   
 			}
 
-			// boolean haEliminato =archivioMusicale.eliminaCd(autoreDaEliminare);
-			// if(haEliminato) {System.out.println("cd eliminato con successo ");}
-			// else {System.out.println("titolo non trovato ");}
+	// boolean haEliminato =archivioMusicale.eliminaCd(autoreDaEliminare);
+	// if(haEliminato) {System.out.println("cd eliminato con successo ");}
+	// else {System.out.println("titolo non trovato ");}
 
-			break;
+	break;
 
-		default:
-			break;
-		}
-	}
+	default:break;
+}}
 
 }

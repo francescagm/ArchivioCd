@@ -47,7 +47,9 @@ import util.mylib.EstrazioniCasuali;
 			for (Cd cd: cdDaEliminare) {
 				tuttiMieiCd.remove(cd);				
 			}
-			return (cdAllInizio-cdDaEliminare.size()==tuttiMieiCd.size());
+			if (cdAllInizio-cdDaEliminare.size()==tuttiMieiCd.size())
+				return true;
+			return false;
 		}
 	
 		
@@ -67,16 +69,16 @@ import util.mylib.EstrazioniCasuali;
 		}
 
 		/**
-		 * <b>Elimina</b> un {@linkplain Cd} cercandolo per <b>cantante</b>
+		 * <b>Elimina</b> un {@linkplain Cd} cercandolo per <b>autore</b>
 		 * 
 		 * @return <tt>true</tt> se la eliminazione e' andata a buon fine,
 		 *         <tt>false</tt> altrimenti
-		 * @param cantante
-		 *            e' il <b>cantante</b> da ricercare
+		 * @param autore
+		 *            e' il <b>autore</b> da ricercare
 		 *            @author Simone
 		 */
-		public boolean eliminaCDPerAutore(String cantante) {  // perchè qui passa un cantante  qui è autore giusto ? 
-			return eliminaCds(cercaCDPerAutore(cantante));
+		public boolean eliminaCDPerAutore(String autore) {  // perchè qui passa un cantante  qui è autore giusto ? 
+			return eliminaCds(cercaCDPerAutore(autore));
 		}
 		/**
 		 * <b>Cerca </b>un {@linkplain Cd} tra {@linkplain #tuttiMieiCd}
