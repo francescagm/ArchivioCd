@@ -7,29 +7,30 @@ import java.sql.Time;
 /** {@linkplain Class} che rappresenta un <b>brano musicale</b> */
 public class Brano {
 	private static int progressivo = 0;
-	private String codiceBrano;
-	private String titoloBrano;
+	private String codice;
+	private String titolo;
 	private String cantante;
 	private Time durataBranoSecondi;// in millisecondi
 
 	public Brano(String _titoloBrano, String _cantante, int _durataBranoSecondi) {
-		setTitoloBrano(_titoloBrano);
-		setDurataBranoSecondi(_durataBranoSecondi);
+		setTitolo(_titoloBrano);
+		setDurataBrano(_durataBranoSecondi);
 		setCantante(_cantante);
-		setCodiceBrano();
+		setCodice();
 		progressivo++;
 	}
 
 	public Brano(String titoloBrano, String cantante, int minuti, int secondi) {
 		this(titoloBrano, cantante, minuti * 60 + secondi);
 	}
-
+	/**<h1> metodo per test JUnit </h1>
+	 * @deprecated MANCA ATTRIBUTO {@linkplain #cantante}*/
 	public Brano(String titoloBrano, int minuti, int secondi) {
 		this(titoloBrano, "", minuti, secondi);
 	}
 
 	public String getCodice() {
-		return codiceBrano;
+		return codice;
 	}
 
 	/**
@@ -45,21 +46,21 @@ public class Brano {
 
 	/**
 	 * @return un <tt>long</tt> rappresentante i secondi dell'attributo
-	 *         {@linkplain #durataBranoSecondi}
+	 *         {@linkplain #durataBrano}
 	 */
-	public long getDurataBrano() {
+	public long getDurataBranoSecondi() {
 		return durataBranoSecondi.getTime() / 1000;
 	}
 
 	public String getTitolo() {
-		return titoloBrano;
+		return titolo;
 	}
 
-	public void setTitoloBrano(String titoloBrano) {
-		this.titoloBrano = titoloBrano;
+	public void setTitolo(String titoloBrano) {
+		this.titolo = titoloBrano;
 	}
 
-	public void setDurataBranoSecondi(int durataBranoSecondi) {
+	public void setDurataBrano(int durataBranoSecondi) {
 
 		this.durataBranoSecondi = new Time(durataBranoSecondi * 1000);
 	}
@@ -72,13 +73,13 @@ public class Brano {
 		this.cantante = cantante;
 	}
 
-	private void setCodiceBrano() {
-		this.codiceBrano = Brano.class.getSimpleName() + progressivo;
+	private void setCodice() {
+		this.codice = Brano.class.getSimpleName() + progressivo;
 	}
 
 	public String belToString() {
 		return String.format("Il Brano %s, interpretato da %s, che dura %s. Il suo codiceUnivoco e' %s",
-				titoloBrano.toUpperCase(), cantante, getDurataBranoString(), codiceBrano);
+				titolo.toUpperCase(), cantante, getDurataBranoString(), codice);
 	}
 
 	/**<h5>UNUSED</h5><h1> metodo per test JUnit </h1>
@@ -86,13 +87,13 @@ public class Brano {
 	
 	public String toString() {
 		
-		return String.format("%s [%02d:%02d] ",titoloBrano,durataBranoSecondi.getMinutes(),durataBranoSecondi.getSeconds());
+		return String.format("%s [%02d:%02d] ",titolo,durataBranoSecondi.getMinutes(),durataBranoSecondi.getSeconds());
 	}
 
 	public boolean equals(Brano brano) {
-		return this.titoloBrano.compareTo(brano.titoloBrano) == 0
-				&& this.codiceBrano.compareTo(brano.getCodice()) == 0
-				&& this.cantante.compareTo(brano.getCantante()) == 0 && this.getDurataBrano() == brano.getDurataBrano();
+		return this.titolo.compareTo(brano.titolo) == 0
+				&& this.codice.compareTo(brano.getCodice()) == 0
+				&& this.cantante.compareTo(brano.getCantante()) == 0 && this.getDurataBranoSecondi() == brano.getDurataBranoSecondi();
 			
 	}
 

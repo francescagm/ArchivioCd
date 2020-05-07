@@ -2,7 +2,7 @@ package my.archivioCD;
 
 import util.mylib.InputDati;
 
-public class ArchvioUtils {
+public class ArchivioUtils {
 
 	public static Brano creaBrano() {
 		return new Brano(InputDati.leggiStringaNonVuota("Inserisci il titolo del Brano "),
