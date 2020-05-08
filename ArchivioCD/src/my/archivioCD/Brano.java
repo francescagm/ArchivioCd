@@ -91,9 +91,8 @@ public class Brano {
 	}
 
 	public boolean equals(Brano brano) {
-		return this.titolo.compareTo(brano.titolo) == 0
-				&& this.codice.compareTo(brano.getCodice()) == 0
-				&& this.cantante.compareTo(brano.getCantante()) == 0 && this.getDurataBranoSecondi() == brano.getDurataBranoSecondi();
+		return this.titolo.equalsIgnoreCase(brano.titolo) 
+				&& this.cantante.equalsIgnoreCase(brano.getCantante())  && this.getDurataBranoSecondi() == brano.getDurataBranoSecondi();
 			
 	}
 
