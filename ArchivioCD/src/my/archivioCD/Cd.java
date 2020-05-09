@@ -126,6 +126,7 @@ public class Cd {
 	 */
 	public boolean eliminaBrano(Brano branoDaEliminare) {
 		int braniAllInizio = compilation.size();
+		setDurataCdSecondi(getDurataCd()-branoDaEliminare.getDurataBranoSecondi());
 		compilation.remove(branoDaEliminare);
 		return (braniAllInizio - 1 == compilation.size());
 	}
