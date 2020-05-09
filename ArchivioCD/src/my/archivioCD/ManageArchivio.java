@@ -4,6 +4,9 @@ import util.mylib.InputDati;
 import util.mylib.MyMenu;
 
 public class ManageArchivio {
+	private static final String ESTRAZIONE_CASUALE = "estrazione casuale dei contenuti  ";
+	private static final String VISUALIZZA = "visualizzazione e ricerca dei contenuti";
+	private static final String LIBERA_SPAZIO = "fai spazio in archivio";
 	private static final String ARCHIVIO_VUOTO = "Archivio vuoto";
 	/** {@value} */
 	private static final String ELIMINA_TUTTI = "elimina tutti";
@@ -19,16 +22,21 @@ public class ManageArchivio {
 	private static final String IMPOSSIBILE_INSERIRE_BRANO = NO_CD
 			+ "\n impossibile inserire un brano, inserire prima un cd ";
 	/** {@value} */
-	private final static String[] VOCI = { "Aggiungi CD", "Aggiungi un Brano", "Rimuovi un CD", "Rimuovi un Brano",
-			"Visualizza Brani", "Visualizza Cd", "Visualizza Tutto", "Estrai un Cd Casualmente",
-			"Estrai un Brano Casualmente", "Estrai tutto Casualmente" };
+	private final static String[] VOCI = { "Aggiorna contenuti Archivio", "ottimizza lo spazio in archivio", "visualizza contenuti musicali", "riproduzione casuale"};
+			
+			
 	/** {@value} */
-	private final static String TITOLO = "ARCHIVIO CD";
+	private final static String TITOLO = "    LA MIA MUSICA :   ";
 	/** {@value} */
 	private static final String REINSERIRE = "voi tentare di nuovo l'inserimento ?";
 	/** {@value} */
 	private static final String ELIMINA = "1-->elimina per titolo\n2-->elimina per autore\n3-->Elimina tutto";
-
+	private static final String AGGIORNA = "Aggiornamento contenuti in archivio musicale";
+	private static final String[] TIPO_AGGIORNAMENTO = {"inserisci nuovo cd vuoto","inserisci nuova compilation completa","inserisci nuovo brano "};
+	private static final String[] COSA_CANCELLO = {"elimina un cd ","elimina brani ","RESETTA INTERO ARCHIVIO"};
+	private static final String[] MOSRA_PER = {"visualizza tutti i brani","visualizza tutti i cd","visualizza intera collezione","cerca"};  
+	private static final String[] ESTRAI_PER = {"estrai un cd a caso ","estrai un brano casualmente","estrai tutto ","shuffle brani"};    
+	final private static String MESS_USCITA = "Vuoi veramente uscire ?";
 	private static ArchivioCd archivioMusicale = new ArchivioCd();
 
 	MyMenu menu = new MyMenu(TITOLO, VOCI);
@@ -40,45 +48,29 @@ public class ManageArchivio {
 
 			switch (scelta) {
 			case 1: {
-				inserisciCD();
+				aggiornaArchivio();
+				
 				break;
 			}
 			case 2: {
-				inserisciBrano();
+				cleanArchivio();
+				
 				break;
 			}
 			case 3: {
-				eliminaCd();
+				
+				VisualizzaArchvio();
+				
+				
 				break;
 			}
+			
 			case 4: {
-				this.eliminaBrano();
+				riproduzioneCasuale();
+				
 				break;
 			}
-			case 5: {
-				visualizzaBrani();
-				break;
-			}
-			case 6: {
-				visualizzaCd();
-				break;
-			}
-			case 7: {
-				visualizzaTutto();
-				break;
-			}
-			case 8: {
-				estraiCd();
-				break;
-			}
-			case 9: {
-				estraiBrano();
-				break;
-			}
-			case 10: {
-				estraiTutto();
-				break;
-			}
+			
 			default:
 				finito = true;
 				break;
@@ -86,7 +78,11 @@ public class ManageArchivio {
 		} while (!finito);
 	}
 
+	
 	private void inserisciCD() {
+		
+		
+		
 		
 		do {
 			Cd nuovoCd = ArchivioUtils.creaCD();
@@ -97,8 +93,194 @@ public class ManageArchivio {
 				System.out.println(e.getMessage());
 				if (!InputDati.yesOrNo(REINSERIRE))
 					break;
-			}
+			}		
 		} while (true);
+		
+	}
+	
+	public void aggiornaArchivio() {
+	MyMenu aggiornaArchvio = new MyMenu(AGGIORNA, TIPO_AGGIORNAMENTO);
+    int selezione=0;
+	do {
+	 selezione = aggiornaArchvio.scegli();
+	 switch (selezione) {
+	 case 0: 
+		 InputDati.yesOrNo(MESS_USCITA);
+		 break;
+	 case 1:
+		inserisciCD();
+		break;
+		
+	case 2:
+		inserisciCdCompleto(); 
+		
+	case 3:
+		System.out.println("inserisci un nuovo brano per aggiornare playlist esistente");
+		System.out.println("scelgi un cd dalla lista:");
+		inserisciBrano();
+		default:
+		 
+		break;
+	}
+	   
+	} while (selezione!=0);
+	System.out.println("fine_aggiornamento");
+	}
+	
+	
+
+	public void cleanArchivio() {
+		MyMenu liberaArchivio = new MyMenu(LIBERA_SPAZIO, COSA_CANCELLO);
+		int scelta = 0;
+		do {
+	    scelta = liberaArchivio.scegli();
+	    switch (scelta) {
+		case 0:
+			InputDati.yesOrNo("hai finito di fare spazio?");
+			
+			break;
+		case 1:
+			eliminaCd();
+			
+			break;
+			
+			
+		case 2:
+			eliminaBrano();
+			
+			
+			break;
+			
+		case 3:{
+			System.out.println("CANCELLAZIONE COMPLETA DELL ARCHVIO");
+			InputDati.yesOrNo("WARNING !!! sei sicuro di voler cancellare completamente il tuo Archivio");
+		    ArchivioCd sceltaDefinitiva = new ArchivioCd();
+		    sceltaDefinitiva.eliminaTuttiCd();
+			System.out.println("ARCHIVIO FORMATTATO");
+			
+			break;
+		}
+		default:
+			
+			break;
+	    }
+		} while (scelta !=0);
+		System.out.println("fine");
+		}
+		
+	
+	
+	
+	
+	
+	public void VisualizzaArchvio() {
+		MyMenu contenuti = new MyMenu(VISUALIZZA,MOSRA_PER);
+		int scelta = 0;
+		do {
+	    scelta = contenuti.scegli();
+	    switch (scelta) {
+		case 0:
+			InputDati.yesOrNo("hai consultato abbastanza");
+			
+			break;
+		case 1:
+			System.out.println("la tua collezione si compone dei seguenti cd:");
+			visualizzaCd();
+			
+			break;
+			
+			
+		case 2:
+			System.out.println(" ecco la lista dei brani musicali presenti nella collezione:");
+			visualizzaBrani();
+			
+			break;
+			
+		case 3:
+			System.out.println("tutte le playlist:");
+			visualizzaTutto();
+			
+			break;
+		case 4:
+           
+			
+			cerca();
+			// cerca cd per titolo .... per autore brano per titolo brano per autore 
+			
+			break;
+		
+		default:
+			
+			break;
+	    }
+		} while (scelta !=0);
+		System.out.println("fine");
+		}
+	
+	
+	
+	public void riproduzioneCasuale() {
+		MyMenu shuffle = new MyMenu(ESTRAZIONE_CASUALE,ESTRAI_PER);
+		int scelta = 0;
+		do {
+	    scelta = shuffle.scegli();
+	    switch (scelta) {
+		case 0:
+			InputDati.yesOrNo("hai ascoltato abbastanza");
+			
+			break;
+		case 1:{
+			System.out.println("ascolta un cd a caso");
+			estraiCd();
+			break;
+		}
+			
+			
+		case 2:{
+			System.out.println("hai poco tempo ascolta un brano a caso");
+			estraiBrano();
+			
+			break;
+		}
+		case 3:{
+			System.out.println("shuffle dalla collezione");
+			estraiTutto();
+			
+			break;
+		}
+//		case 4:
+//           
+//          // estrai piu brani da diversi cd 
+//			
+//			break;
+//		
+		default:
+			
+			break;
+	    }
+		} while (scelta !=0);
+		System.out.println("fine");
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	private void cerca() {
+		// TODO metodi di ricerca per 
+		
 	}
 
 	private void eliminaCd() {
@@ -162,6 +344,9 @@ public class ManageArchivio {
 
 	private void eliminaBrano() {
 		System.out.println("ELIMINA BRANO");
+		if(archivioMusicale.getArchivio()== null ||archivioMusicale.getTuttiMieiCd()==null)
+			System.out.println("archivio vuoto brani non presenti impossibile procedere");
+			System.out.println(" archvio vuoto non sono presenti brani da eliminare");
 		int sceltaCd = scegliCd();
 		if (sceltaCd != -1) {
 			System.out.println("Hai scelto " + archivioMusicale.getCd(sceltaCd).belToString());
@@ -233,7 +418,7 @@ public class ManageArchivio {
 	private void eliminaBranoCdCantante(int sceltaCd) {
 		String cantanteDaEliminare = InputDati.leggiStringaNonVuota("scegli il titolo");
 		String[] braniTrovati = archivioMusicale.getCd(sceltaCd).visualizzaBranoPerCantante(cantanteDaEliminare);
-		if (braniTrovati != null&&braniTrovati.length>0) {
+		if (braniTrovati != null &&braniTrovati.length>0) {
 			for (int i = 0; i < braniTrovati.length; i++) {
 				System.out.println(i + FRECCIETTA + braniTrovati[i]);
 			}
@@ -261,17 +446,26 @@ public class ManageArchivio {
 
 	private void inserisciBrano() {
 		int sceltaCd = scegliCd();
+		// qui bisogna  iserire qualcosa per dire prima se non c'è il cd di inserire prima un cd 
 		if (sceltaCd != -1) {
 			do {
 				Brano branoDaInserire = ArchivioUtils.creaBrano();
 				try {
 					archivioMusicale.getCd(sceltaCd).aggiungiBrano(branoDaInserire);
-					break;
+					System.out.println("hai inserito %s "+ branoDaInserire.belToString()+"nella playlist cd: "+archivioMusicale.getCd(sceltaCd).getTitolo());			
+					InputDati.yesOrNo("inserire un nuovo brano in questa playlist?");
+					while(!false) {
+					archivioMusicale.getCd(sceltaCd).aggiungiBrano(ArchivioUtils.creaBrano());
+					System.out.println("hai inserito : "+ branoDaInserire.belToString()+"  nella playlist cd: " +archivioMusicale.getCd(sceltaCd).getTitolo());
+				}
+					
 				} catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 					if (!InputDati.yesOrNo("Riprovare ad inserire un nuovo Brano in Questo Cd?"))
-						break;
-				}
+						break;				
+					}
+							
+				
 			} while (true);
 
 		}
@@ -350,6 +544,9 @@ public class ManageArchivio {
 				System.out.println("Tutti i Cd sono vuoti");
 		} else
 			System.out.println(ARCHIVIO_VUOTO);
+	}
+	private void inserisciCdCompleto() {
+		// TODO 
 	}
 
 }

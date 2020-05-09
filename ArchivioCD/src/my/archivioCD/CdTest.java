@@ -59,5 +59,6 @@ public class CdTest {
 			titoliBraniEstratti.add(b.getTitolo());
 		}
 		assertTrue(titoliBraniEstratti.size() >= 7);
+		
 	}
 }

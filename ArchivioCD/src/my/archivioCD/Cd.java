@@ -398,5 +398,15 @@ public class Cd {
 	public boolean haTitolo(String cercato) {
 		return titolo.equalsIgnoreCase(cercato);
 	}
+//	public boolean compilationNonEsiste() {
+//		if(compilation==null)
+//		
+//		return true;
+//		return false;
+//	  
+		
+	    
+			
+//	}
 
 }

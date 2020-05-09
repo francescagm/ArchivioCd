@@ -13,9 +13,13 @@ public class ArchivioCd {
 	 */
 	private ArrayList<Cd> tuttiMieiCd;
 
+	public ArrayList<Cd> getTuttiMieiCd() {
+		return tuttiMieiCd;
+	}
+
 	public ArchivioCd() {
 		tuttiMieiCd = new ArrayList<>();
-		tuttiMieiCd.clear();
+		//tuttiMieiCd.clear();//ma qui perchè clear
 	}
 
 	/** <b>Aggiunge </b>un {@linkplain Cd} a {@link #tuttiMieiCd} */
