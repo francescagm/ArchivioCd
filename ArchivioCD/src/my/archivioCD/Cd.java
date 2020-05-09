@@ -58,8 +58,7 @@ public class Cd {
 			throw new IllegalArgumentException("BRANO GIA' ESISTENTE IN QUESTO Cd");
 		compilation.add(brano);
 		setDurataCdSecondi((getDurataCd() + brano.getDurataBranoSecondi()));
-	}
-
+	}	
 	/**
 	 * <b>Elimina </b>tutti i {@linkplain Brano} passati nell'{@linkplain ArrayList}
 	 * 
@@ -78,6 +77,7 @@ public class Cd {
 			if (compilation.remove(brano))
 				setDurataCdSecondi(getDurataCd() - brano.getDurataBranoSecondi());
 		}
+		
 		return (braniAllInizio - braniDaEliminare.size() == compilation.size());
 	}
 
@@ -110,6 +110,7 @@ public class Cd {
 	public boolean eliminaBranoPerCantante(String cantante) {
 		return eliminaBrani(cercaBranoPerCantante(cantante));
 	}
+	
 /**<b>Elimina</b> un {@linkplain Brano} cercandolo per <tt>ID</tt>
  * @return true se il brano e' stato eliminato, false altrimenti*/
 	public boolean eliminaBranoPerID(String idBrano) {
@@ -139,8 +140,10 @@ public class Cd {
 	 *         <b> false </b> altrimenti
 	 */
 	public boolean eliminaTuttiBrani() {
-		ArrayList<Brano>braniDaEliminare =compilation;
-		return eliminaBrani(braniDaEliminare);
+	if(compilation.isEmpty())
+		return false;
+	compilation.clear();
+	return true;
 	}
 
 	/**
@@ -215,42 +218,7 @@ public class Cd {
 		}
 		return null;
 	}
-	/**
-	 * <b>Visualizzazione </b>dei {@linkplain Brano} cercati per titolo.
-	 * 
-	 * @return un <tt>array</tt> di {@linkplain Strig}, contenente le specifiche del
-	 *         {@linkplain Brano}
-	 * @param titoloBrano
-	 *            e' il titolo del {@linkplain Brano} da visualizzare
-	 * @author Simone
-	 */
-	public String[] visualizzaBranoPerTitolo(String titoloBrano) {
-		ArrayList<Brano> braniTrovati = cercaBranoPerTitolo(titoloBrano);
-		ArrayList<String> stringaBranoTrovato = new ArrayList<>();
-		for (Brano brano : braniTrovati) {
-			stringaBranoTrovato.add(brano.belToString());
-		}
-		return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
-	}
-
-	/**
-	 * <b>Visualizzazione </b>dei {@linkplain Brano} cercati per <tt>cantante</tt>.
-	 * 
-	 * @return un <tt>array</tt> di {@linkplain Strig}, contenente le specifiche dei
-	 *         singoli {@linkplain Brano}
-	 * @param cantanteBrano
-	 *            e' il cantante del {@linkplain Brano} da visualizzare
-	 * @author Simone
-	 */
-	public String[] visualizzaBranoPerCantante(String cantanteBrano) {
-		ArrayList<Brano> braniTrovati = cercaBranoPerCantante(cantanteBrano);
-		ArrayList<String> stringaBranoTrovato = new ArrayList<>();
-		for (Brano brano : braniTrovati) {
-			stringaBranoTrovato.add(brano.belToString());
-		}
-		return stringaBranoTrovato.toArray(new String[stringaBranoTrovato.size()]);
-	}
-
+	
 	/**
 	 * <b>Visualizza</b> l'intera {@linkplain #compilation} del {@linkplain Cd}
 	 * 
@@ -324,7 +292,9 @@ public class Cd {
 	 */
 	public String toStringCollection() {
 		StringBuilder fine = new StringBuilder();
+		
 		fine.append(belToString());
+		
 		fine.append(System.lineSeparator() + "Contiene:" + System.lineSeparator());
 		char a = 'A';
 		String[] collezione = visualizzaInteraCollezione();
@@ -338,7 +308,7 @@ public class Cd {
 			}
 			return fine.toString();
 		}
-		return fine.toString()+"\n--->vuoto";
+		return fine.toString()+"\t--> vuoto";
 	}
 
 	public boolean equals(Cd cd_da_confrontare) {

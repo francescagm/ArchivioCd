@@ -15,10 +15,12 @@ public class ArchivioCd {
 
 	public ArchivioCd() {
 		tuttiMieiCd = new ArrayList<>();
-		tuttiMieiCd.clear();
+		
 	}
 
-	/** <b>Aggiunge </b>un {@linkplain Cd} a {@link #tuttiMieiCd} */
+	/** <b>Aggiunge </b>un {@linkplain Cd} a {@link #tuttiMieiCd} 
+	 * @throws IllegalArgumentException se esiste gia' un {@linkplain Cd} con lo stesso nome
+	 * @author Simone*/
 	public void aggiungiCd(Cd cdDaInserire) {
 		if (contiene(cdDaInserire.getTitolo()))
 			throw new IllegalArgumentException(CD_ESISTENTE);
@@ -35,9 +37,7 @@ public class ArchivioCd {
 	 * @author Simone
 	 */
 	public boolean eliminaCd(Cd cdDaEliminare) {
-		int cdAllInizio = tuttiMieiCd.size();
-		tuttiMieiCd.remove(cdDaEliminare);
-		return (cdAllInizio - 1 == tuttiMieiCd.size());
+		return (tuttiMieiCd.remove(cdDaEliminare));
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ArchivioCd {
 	 */
 
 	public boolean eliminaCd(String titolo) {
-		return eliminaCds(cercaCDPerTitolo(titolo));
+		return eliminaCd(cercaCDPerTitolo(titolo));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class ArchivioCd {
 	/**
 	 * <b>Cerca </b>un {@linkplain Cd} tra {@linkplain #tuttiMieiCd}
 	 * 
-	 * @return la <b>posizione </b>del {@linkplain Cd} cercato
+	 * @return la <b>posizione </b>del {@linkplain Cd} cercato, <tt>-1</tt> se non trovata
 	 * @param brano
 	 *            e' il {@linkplain Brano} da cercare
 	 * @author Simone
@@ -122,23 +122,19 @@ public class ArchivioCd {
 	 * <b>Cerca </b>un {@linkplain Cd} tra {@linkplain #tuttiMieiCd} per
 	 * <tt>titolo</tt>
 	 * 
-	 * @return un {@linkplain ArrayList} con all'interno tutti i {@linkplain Cd}
-	 *         trovati
+	 * @return un {@linkplain Cd} se trovato, altrimenti null
 	 * @param titolo
 	 *            e' il <b>titolo</b> da ricercare
 	 * @author Simone
 	 */
-	public ArrayList<Cd> cercaCDPerTitolo(String titolo) { // qui però in teoria dovrebbe essere una stringa nel senso
-															// che non ho mai due titoli uguali ..
-		ArrayList<Cd> cdTrovati = new ArrayList<Cd>();
-
+	public Cd cercaCDPerTitolo(String titolo) {
+		Cd cdTrovato=null;
 		for (int i = 0; i < tuttiMieiCd.size(); i++) {
 			if (tuttiMieiCd.get(i).getTitolo().equalsIgnoreCase(titolo)) {
-				cdTrovati.add(tuttiMieiCd.get(i));
+				cdTrovato=(tuttiMieiCd.get(i));
 			}
-
 		}
-		return cdTrovati;
+		return cdTrovato;
 	}
 
 	/**
@@ -161,42 +157,6 @@ public class ArchivioCd {
 
 		}
 		return cdTrovati;
-	}
-
-	/**
-	 * <b>Visualizzazione </b>dei {@linkplain Cd} cercati per titolo.
-	 * 
-	 * @return un <tt>array</tt> di {@linkplain Strig}, contenente le specifiche del
-	 *         {@linkplain Cd}
-	 * @param titoloCd
-	 *            e' il titolo del {@linkplain Cd} da visualizzare
-	 * @author Simone
-	 */
-	public String[] visualizzaCdPerTitolo(String titoloCd) {
-		ArrayList<Cd> cdsTrovati = cercaCDPerTitolo(titoloCd);
-		ArrayList<String> stringaCdTrovato = new ArrayList<>();
-		for (Cd cds : cdsTrovati) {
-			stringaCdTrovato.add(cds.belToString());
-		}
-		return stringaCdTrovato.toArray(new String[stringaCdTrovato.size()]);
-	}
-
-	/**
-	 * <b>Visualizzazione </b>dei {@linkplain Cd} cercati per autore.
-	 * 
-	 * @return un <tt>array</tt> di {@linkplain Strig}, contenente le specifiche del
-	 *         {@linkplain Cd}
-	 * @param autoreCd
-	 *            e' il titolo del {@linkplain Cd} da visualizzare
-	 * @author Simone
-	 */
-	public String[] visualizzaCdPerAutore(String autoreCd) {
-		ArrayList<Cd> cdsTrovati = cercaCDPerAutore(autoreCd);
-		ArrayList<String> stringaCdTrovato = new ArrayList<>();
-		for (Cd cds : cdsTrovati) {
-			stringaCdTrovato.add(cds.belToString());
-		}
-		return stringaCdTrovato.toArray(new String[stringaCdTrovato.size()]);
 	}
 
 	/**
@@ -232,7 +192,7 @@ public class ArchivioCd {
 		for (Cd cd : tuttiMieiCd) {
 			daVisualizzare.add(cd.toStringCollection());
 		}
-		return daVisualizzare.toArray(new String[daVisualizzare.size()]);
+		return daVisualizzare.toArray (new String[daVisualizzare.size()]);
 	}
 
 	/** @return il {@linkplain Cd} in quella posizione */
@@ -264,7 +224,7 @@ public class ArchivioCd {
 	 * @see {@linkplain ArchivioCd#aggiungiCd(Cd)}
 	 */
 	public boolean contiene(String titolo) {
-		return !cercaCDPerTitolo(titolo).isEmpty();
+		return cercaCDPerTitolo(titolo)!=null;
 
 	}
 

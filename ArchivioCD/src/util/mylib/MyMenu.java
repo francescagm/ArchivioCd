@@ -8,7 +8,7 @@ package util.mylib;
  */
 
 public class MyMenu {
-	final private static String VOCE_USCITA = "0\tEsci";
+	final private static String VOCE_USCITA = "0)\tEsci";
 	final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
 
 	private String titolo;
@@ -29,7 +29,7 @@ public class MyMenu {
 		System.out.println(titolo);
 		System.out.println(stampaCornice());
 		for (int i = 0; i < voci.length; i++) {
-			System.out.println((i + 1) + "\t" + voci[i]);
+			System.out.println((i + 1) + ")\t" + voci[i]);
 		}
 		System.out.println();
 		System.out.println(VOCE_USCITA);
