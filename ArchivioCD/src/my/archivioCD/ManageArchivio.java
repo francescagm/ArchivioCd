@@ -559,7 +559,7 @@ public class ManageArchivio {
 				String tuttiCD = archivioMusicale.toStringCdColletion();
 				if (tuttiCD != null&&tuttiCD.length()>0) {
 					System.out.println(tuttiCD);
-					return InputDati.leggiIntero("Scegli il CD> ", 0, archivioMusicale.visualizzaInteraCollezioneCD().length - 1);
+					
 				}
 				return -1;
 			}
