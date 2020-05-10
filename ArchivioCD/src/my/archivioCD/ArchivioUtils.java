@@ -8,7 +8,7 @@ public class ArchivioUtils {
 	
 	private final static String frame = "********************************************************";
 	private final static String MESS_GOODBYE = "\n ARRIVEDERCI \n  ";
-	private final static String MESS_WELCOME = "        BENVENUTO IN ARCHIVIO MUSICALE\n      organizza e gestisci le tue raccolte \n                   inizia: ";
+	private final static String MESS_WELCOME = "        BENVENUTO IN ARCHIVIO MUSICALE\n      organizza e gestisci le tue raccolte";
 
 	public static Brano creaBrano() {
 		return new Brano(InputDati.leggiStringaNonVuota("Inserisci il titolo del Brano "),

@@ -1,7 +1,6 @@
 package my.archivioCD;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import util.mylib.EstrazioniCasuali;
 
@@ -15,12 +14,16 @@ public class ArchivioCd {
 
 	public ArchivioCd() {
 		tuttiMieiCd = new ArrayList<>();
-		
+
 	}
 
-	/** <b>Aggiunge </b>un {@linkplain Cd} a {@link #tuttiMieiCd} 
-	 * @throws IllegalArgumentException se esiste gia' un {@linkplain Cd} con lo stesso nome
-	 * @author Simone*/
+	/**
+	 * <b>Aggiunge </b>un {@linkplain Cd} a {@link #tuttiMieiCd}
+	 * 
+	 * @throws IllegalArgumentException
+	 *             se esiste gia' un {@linkplain Cd} con lo stesso nome
+	 * @author Simone
+	 */
 	public void aggiungiCd(Cd cdDaInserire) {
 		if (contiene(cdDaInserire.getTitolo()))
 			throw new IllegalArgumentException(CD_ESISTENTE);
@@ -97,13 +100,18 @@ public class ArchivioCd {
 	 * @author Simone
 	 */
 	public boolean eliminaTuttiCd() {
-		return tuttiMieiCd.removeAll(tuttiMieiCd);
+		if (tuttiMieiCd.size() > 0) {
+			tuttiMieiCd.clear();
+			return true;
+		} else
+			return false;
 	}
 
 	/**
 	 * <b>Cerca </b>un {@linkplain Cd} tra {@linkplain #tuttiMieiCd}
 	 * 
-	 * @return la <b>posizione </b>del {@linkplain Cd} cercato, <tt>-1</tt> se non trovata
+	 * @return la <b>posizione </b>del {@linkplain Cd} cercato, <tt>-1</tt> se non
+	 *         trovata
 	 * @param brano
 	 *            e' il {@linkplain Brano} da cercare
 	 * @author Simone
@@ -128,10 +136,10 @@ public class ArchivioCd {
 	 * @author Simone
 	 */
 	public Cd cercaCDPerTitolo(String titolo) {
-		Cd cdTrovato=null;
+		Cd cdTrovato = null;
 		for (int i = 0; i < tuttiMieiCd.size(); i++) {
 			if (tuttiMieiCd.get(i).getTitolo().equalsIgnoreCase(titolo)) {
-				cdTrovato=(tuttiMieiCd.get(i));
+				cdTrovato = (tuttiMieiCd.get(i));
 			}
 		}
 		return cdTrovato;
@@ -151,7 +159,7 @@ public class ArchivioCd {
 		ArrayList<Cd> cdTrovati = new ArrayList<Cd>();
 
 		for (int i = 0; i < tuttiMieiCd.size(); i++) {
-			if (tuttiMieiCd.get(i).getTitolo().equalsIgnoreCase(autore)) {
+			if (tuttiMieiCd.get(i).getAutore().equalsIgnoreCase(autore)) {
 				cdTrovati.add(tuttiMieiCd.get(i));
 			}
 
@@ -192,12 +200,23 @@ public class ArchivioCd {
 		for (Cd cd : tuttiMieiCd) {
 			daVisualizzare.add(cd.toStringCollection());
 		}
-		return daVisualizzare.toArray (new String[daVisualizzare.size()]);
+		return daVisualizzare.toArray(new String[daVisualizzare.size()]);
 	}
 
-	/** @return il {@linkplain Cd} in quella posizione */
+	/**
+	 * @return il {@linkplain Cd} in quella posizione, null se in quella posizione
+	 *         non e' presente nulla
+	 * @param index,
+	 *            e' la posizione del {@linkplain Cd} in {@link #tuttiMieiCd}
+	 */
 	public Cd getCd(int index) {
-		return tuttiMieiCd.get(index);
+		Cd cdTrovato = null;
+		try {
+			cdTrovato = tuttiMieiCd.get(index);
+		} catch (IndexOutOfBoundsException e) {
+
+		}
+		return cdTrovato;
 	}
 
 	/**
@@ -208,13 +227,6 @@ public class ArchivioCd {
 		return tuttiMieiCd.size();
 	}
 
-	public ArrayList<Cd> getArchivio() {
-		return tuttiMieiCd;
-	}
-
-	private void setArchivio(ArrayList<Cd> tuttiCdNuovi) {
-		this.tuttiMieiCd = tuttiCdNuovi;
-	}
 
 	/**
 	 * Sono tutti i check che si devono superare pe aggiungere un nuovo
@@ -224,7 +236,7 @@ public class ArchivioCd {
 	 * @see {@linkplain ArchivioCd#aggiungiCd(Cd)}
 	 */
 	public boolean contiene(String titolo) {
-		return cercaCDPerTitolo(titolo)!=null;
+		return cercaCDPerTitolo(titolo) != null;
 
 	}
 
@@ -233,14 +245,14 @@ public class ArchivioCd {
 	 *         {@linkplain ArchivioCd} @author Simone
 	 */
 	public String toString() {
-		return String.format("Dentro in ArchivioCD sono presenti %d Dischi", getArchivio().size());
+		return String.format("Dentro in ArchivioCD sono presenti %d Dischi", tuttiMieiCd.size());
 
 	}
 
 	/**
 	 * @return un {@linkplain String} con all' interno le specifiche di tutti i
 	 *         {@linkplain Cd} numerati, contenuti in {@link #tuttiMieiCd}, e tutti
-	 *         i suoi {@linkplain Brano} numerati,<b> se vuoto</b> <tt>null<tt>
+	 *         i suoi {@linkplain Brano} numerati
 	 * @author Simone
 	 * @see #visualizzaInteraCollezioneCdBrani()
 	 */
@@ -250,7 +262,7 @@ public class ArchivioCd {
 		fine.append(toString());
 		fine.append(System.lineSeparator() + "Contiene:" + System.lineSeparator());
 		String[] cdString = visualizzaInteraCollezioneCdBrani();
-		if (cdString != null&&cdString.length>0) {
+		if (cdString != null && cdString.length > 0) {
 			for (int i = 0; i < cdString.length; i++) {
 				fine.append(i);
 				fine.append("--> " + cdString[i]);
@@ -258,13 +270,12 @@ public class ArchivioCd {
 			}
 			return fine.toString();
 		}
-		return null;
+		return fine.toString() + "\t--> vuoto";
 	}
 
 	/**
 	 * @return un {@linkplain String} con all' interno le specifiche di tutti i
-	 *         {@linkplain Cd} numerati, contenuti in {@link #tuttiMieiCd},<b> se
-	 *         vuoto</b> <tt>null<tt>
+	 *         {@linkplain Cd} numerati, contenuti in {@link #tuttiMieiCd},
 	 * @author Simone
 	 * @see #visualizzaInteraCollezioneCD()
 	 */
@@ -274,7 +285,7 @@ public class ArchivioCd {
 		fine.append(toString());
 		fine.append(System.lineSeparator() + "Contiene:" + System.lineSeparator());
 		String[] cdString = visualizzaInteraCollezioneCD();
-		if (cdString != null&&cdString.length>0) {
+		if (cdString != null && cdString.length > 0) {
 			for (int i = 0; i < cdString.length; i++) {
 				fine.append(i);
 				fine.append("--> " + cdString[i]);
@@ -282,7 +293,7 @@ public class ArchivioCd {
 			}
 			return fine.toString();
 		}
-		return null;
+		return fine.toString() + "\t--> vuoto";
 	}
 
 	/**
@@ -292,7 +303,7 @@ public class ArchivioCd {
 	 * @return un {@linkplain Cd}, null se {@link #tuttiMieiCd} e' vuoto
 	 */
 	public Cd cdCasuale() {
-		if(tuttiMieiCd.isEmpty())
+		if (tuttiMieiCd.isEmpty())
 			return null;
 		return tuttiMieiCd.get(EstrazioniCasuali.estraiIntero(0, tuttiMieiCd.size() - 1));
 	}

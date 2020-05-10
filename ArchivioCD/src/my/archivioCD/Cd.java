@@ -7,11 +7,10 @@ import util.mylib.EstrazioniCasuali;
 
 public class Cd {
 
-	private static final String SPAZIO_IN_CD_ESAURITO = "Brano troppo lungo, spazio in esaurimento; capaci\u00e0 disponibile=";
 	private String autore;
 	private Time durataCd;
 	private String titolo;
-	/**<b>Attributo</b> {@linkplain ArrayList} di {@linkplain Brano}*/
+	/** <b>Attributo</b> {@linkplain ArrayList} di {@linkplain Brano} */
 	private ArrayList<Brano> compilation;
 	private String codice;
 	private static int progressivo = 0;
@@ -49,16 +48,24 @@ public class Cd {
 	private void setCodice() {
 		this.codice = Cd.class.getSimpleName() + progressivo;
 	}
-/**<b>Aggiunge</b> un {@linkplain Brano}
- * @throws IllegalArgumentException se il {@linkplain Brano} che si prova ad inserire e' gia' presente nella {@link #compilation}
- * @param brano , e' il {@linkplain Brano} da inserire
- * @author Simone*/
+
+	/**
+	 * <b>Aggiunge</b> un {@linkplain Brano}
+	 * 
+	 * @throws IllegalArgumentException
+	 *             se il {@linkplain Brano} che si prova ad inserire e' gia'
+	 *             presente nella {@link #compilation}
+	 * @param brano
+	 *            , e' il {@linkplain Brano} da inserire
+	 * @author Simone
+	 */
 	public void aggiungiBrano(Brano brano) {
 		if (cercaPosBrano(brano) != -1)
 			throw new IllegalArgumentException("BRANO GIA' ESISTENTE IN QUESTO Cd");
 		compilation.add(brano);
 		setDurataCdSecondi((getDurataCd() + brano.getDurataBranoSecondi()));
-	}	
+	}
+
 	/**
 	 * <b>Elimina </b>tutti i {@linkplain Brano} passati nell'{@linkplain ArrayList}
 	 * 
@@ -67,7 +74,7 @@ public class Cd {
 	 *         <b> false </b> altrimenti
 	 * @param braniDaEliminare
 	 *            e' l' {@linkplain ArrayList} da <b>eliminare</b>
-	 *            @author Simone
+	 * @author Simone
 	 */
 	private boolean eliminaBrani(ArrayList<Brano> braniDaEliminare) {
 		int braniAllInizio = compilation.size();
@@ -77,7 +84,7 @@ public class Cd {
 			if (compilation.remove(brano))
 				setDurataCdSecondi(getDurataCd() - brano.getDurataBranoSecondi());
 		}
-		
+
 		return (braniAllInizio - braniDaEliminare.size() == compilation.size());
 	}
 
@@ -110,13 +117,16 @@ public class Cd {
 	public boolean eliminaBranoPerCantante(String cantante) {
 		return eliminaBrani(cercaBranoPerCantante(cantante));
 	}
-	
-/**<b>Elimina</b> un {@linkplain Brano} cercandolo per <tt>ID</tt>
- * @return true se il brano e' stato eliminato, false altrimenti*/
+
+	/**
+	 * <b>Elimina</b> un {@linkplain Brano} cercandolo per <tt>ID</tt>
+	 * 
+	 * @return true se il brano e' stato eliminato, false altrimenti
+	 */
 	public boolean eliminaBranoPerID(String idBrano) {
 		return eliminaBrano(cercaBranoPerId(idBrano));
 	}
-	
+
 	/***
 	 * <b>Elimina </b>il {@linkplain Brano} passato
 	 * 
@@ -126,10 +136,8 @@ public class Cd {
 	 *            e' il {@linkplain Brano} da <b>eliminare</b>
 	 */
 	public boolean eliminaBrano(Brano branoDaEliminare) {
-		int braniAllInizio = compilation.size();
-		setDurataCdSecondi(getDurataCd()-branoDaEliminare.getDurataBranoSecondi());
-		compilation.remove(branoDaEliminare);
-		return (braniAllInizio - 1 == compilation.size());
+		setDurataCdSecondi(getDurataCd() - branoDaEliminare.getDurataBranoSecondi());
+		return (compilation.remove(branoDaEliminare));
 	}
 
 	/**
@@ -140,10 +148,11 @@ public class Cd {
 	 *         <b> false </b> altrimenti
 	 */
 	public boolean eliminaTuttiBrani() {
-	if(compilation.isEmpty())
-		return false;
-	compilation.clear();
-	return true;
+		if (compilation.isEmpty())
+			return false;
+		compilation.clear();
+		setDurataCdSecondi(0);
+		return true;
 	}
 
 	/**
@@ -208,8 +217,11 @@ public class Cd {
 		return braniTrovati;
 	}
 
-	/**Cerca l'<tt>id</tt> del {@linkplain Brano} in {@link #compilation}
-	 * @return il {@linkplain Brano} se trovato, null altrimenti*/
+	/**
+	 * Cerca l'<tt>id</tt> del {@linkplain Brano} in {@link #compilation}
+	 * 
+	 * @return il {@linkplain Brano} se trovato, null altrimenti
+	 */
 	public Brano cercaBranoPerId(String idBrano) {
 		for (Brano brano : compilation) {
 			if (brano.getCodice().equalsIgnoreCase(idBrano)) {
@@ -218,7 +230,7 @@ public class Cd {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * <b>Visualizza</b> l'intera {@linkplain #compilation} del {@linkplain Cd}
 	 * 
@@ -256,9 +268,6 @@ public class Cd {
 		return compilation;
 	}
 
-	private void setCompilation(ArrayList<Brano> compilation) {
-		this.compilation = compilation;
-	}
 
 	/**
 	 * @return una {@linkplain String} con le specifiche di {@linkplain Cd}
@@ -292,13 +301,13 @@ public class Cd {
 	 */
 	public String toStringCollection() {
 		StringBuilder fine = new StringBuilder();
-		
+
 		fine.append(belToString());
-		
-		fine.append(System.lineSeparator() + "Contiene:" + System.lineSeparator());
+
+		fine.append(System.lineSeparator() + "\tContiene:" + System.lineSeparator());
 		char a = 'A';
 		String[] collezione = visualizzaInteraCollezione();
-		if(collezione!=null&&collezione.length>0){
+		if (collezione != null && collezione.length > 0) {
 			for (int i = 0; i < collezione.length; i++) {
 				fine.append("\t");
 				fine.append((char) (a));
@@ -308,7 +317,7 @@ public class Cd {
 			}
 			return fine.toString();
 		}
-		return fine.toString()+"\t--> vuoto";
+		return fine.toString() + "\t--> vuoto";
 	}
 
 	public boolean equals(Cd cd_da_confrontare) {
@@ -344,7 +353,7 @@ public class Cd {
 	 * @return un {@linkplain Brano}, null se {@link #compilation} e' vuota
 	 */
 	public Brano branoCasuale() {
-		if(compilation.isEmpty())
+		if (compilation.isEmpty())
 			return null;
 		return compilation.get(EstrazioniCasuali.estraiIntero(0, compilation.size() - 1));
 	}
@@ -368,6 +377,26 @@ public class Cd {
 	 */
 	public boolean haTitolo(String cercato) {
 		return titolo.equalsIgnoreCase(cercato);
+	}
+
+	/**
+	 * @return il {@linkplain Brano} in quella posizione nella
+	 *         {@linkplain #compilation}, null se in quella posizione non e'
+	 *         presente nulla
+	 * @param posizione,
+	 *            e' la posizione del {@linkplain Brano}
+	 */
+	public Brano getBrano(int posizione) {
+		Brano branoTrovato = null;
+		try {
+			branoTrovato = compilation.get(posizione);
+		} catch (IndexOutOfBoundsException e) {
+		}
+		return branoTrovato;
+	}
+	/**@return il numero di {@linkplain Brano} presenti in {@link #compilation}*/
+	public int getNumeroBrani() {
+		return compilation.size();
 	}
 
 }
