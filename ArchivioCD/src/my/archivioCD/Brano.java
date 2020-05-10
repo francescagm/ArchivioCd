@@ -2,10 +2,9 @@ package my.archivioCD;
 
 import java.sql.Time;
 
-
-
 /** {@linkplain Class} che rappresenta un <b>brano musicale</b> */
 public class Brano {
+	private static final String IMPOSSIBILE_INSERIRE_UN_BRANO_CON_DURATA_0 = "Impossibile inserire un brano con durata 0";
 	private static int progressivo = 0;
 	private String codice;
 	private String titolo;
@@ -13,6 +12,8 @@ public class Brano {
 	private Time durataBranoSecondi;// in millisecondi
 
 	public Brano(String _titoloBrano, String _cantante, int _durataBranoSecondi) {
+		if (_durataBranoSecondi <= 0)
+			setDurataBrano(_durataBranoSecondi+1);
 		setTitolo(_titoloBrano);
 		setDurataBrano(_durataBranoSecondi);
 		setCantante(_cantante);
@@ -23,8 +24,12 @@ public class Brano {
 	public Brano(String titoloBrano, String cantante, int minuti, int secondi) {
 		this(titoloBrano, cantante, minuti * 60 + secondi);
 	}
-	/**<h1> metodo per test JUnit </h1>
-	 * @deprecated MANCA ATTRIBUTO {@linkplain #cantante}*/
+
+	/**
+	 * <h1>metodo per test JUnit</h1>
+	 * 
+	 * @deprecated MANCA ATTRIBUTO {@linkplain #cantante}
+	 */
 	public Brano(String titoloBrano, int minuti, int secondi) {
 		this(titoloBrano, "", minuti, secondi);
 	}
@@ -82,18 +87,22 @@ public class Brano {
 				titolo.toUpperCase(), cantante, getDurataBranoString(), codice);
 	}
 
-	/**<h5>UNUSED</h5><h1> metodo per test JUnit </h1>
-	 * @deprecated usare {@linkplain #belToString()}*/
-	
+	/**
+	 * <h5>UNUSED</h5>
+	 * <h1>metodo per test JUnit</h1>
+	 * 
+	 * @deprecated usare {@linkplain #belToString()}
+	 */
+
 	public String toString() {
-		
-		return String.format("%s [%02d:%02d] ",titolo,durataBranoSecondi.getMinutes(),durataBranoSecondi.getSeconds());
+
+		return String.format("%s [%02d:%02d] ", titolo, durataBranoSecondi.getMinutes(),
+				durataBranoSecondi.getSeconds());
 	}
 
 	public boolean equals(Brano brano) {
-		return this.titolo.equalsIgnoreCase(brano.titolo) 
-				&& this.cantante.equalsIgnoreCase(brano.getCantante())  && this.getDurataBranoSecondi() == brano.getDurataBranoSecondi();
-			
+		return this.titolo.equalsIgnoreCase(brano.titolo) && this.cantante.equalsIgnoreCase(brano.getCantante());
+
 	}
 
 }

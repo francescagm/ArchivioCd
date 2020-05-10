@@ -7,12 +7,12 @@ import util.mylib.MyMenu;
 
 public class ManageArchivio {
 
-	private static final String CONTENUTI_ESIGUI = "peresguire lo shuffle completo devi arricchire la collezione";
-	private static final String SHUFFLE = "shuffle";
+	private static final String CONTENUTI_ESIGUI = "Per eseguire lo shuffle devi arricchire la collezione";
+	private static final String SHUFFLE = "Shuffle";
 	private static final String ARCHIVIO_VUOTO = "Archivio vuoto ";
 	private static final String BRANI_TROVATI = "Brani trovati ";
 	private static final String CD_IN_ARCHIVIO = "Cd in Archivio ";
-	private static final String ELIMINARE_TUTTI_I_BRANI= "Eliminare tutti i brani ";
+	private static final String ELIMINARE_TUTTI_I_BRANI = "Eliminare tutti i brani ";
 	private static final String ELIMINAZIONE_ANNULLATA = "Eliminazione annullata ";
 	private static final String ELIMINAZIONE_AVVENUTA = "ELIMINAZIONE AVVENUTA ";
 	private static final String HAI_ELIMINATO = "Hai eliminato ";
@@ -21,17 +21,16 @@ public class ManageArchivio {
 	private static final String PROBLEMI_NELL_ELIMINAZIONE = "PROBLEMI NELL'ELIMINAZIONE ";
 	private static final String VISUALIZZAZIONE_ANNULLATA = "Visualizzazione annullata ";
 	private static final String IMPOSSIBILE_ELIMINARE_BRANI = "Impossibile eliminare brani";
-	private static final String RICERCA_ANNULLATA = "Ricerca annullata ";	
+	private static final String RICERCA_ANNULLATA = "Ricerca annullata ";
 	private static final String VUOI_RIPROVARE = "Vuoi riprovare? ";
 	private static final String INSERISCI_AUTORE = "Inserisci autore da cercare ";
 	private static final String INSERISCI_TITOLO = "Inserisci titolo da cercare ";
 	private static final String INSERISCI_CANTANTE = "Inserisci cantante da cercare ";
-	
+
 	private final static String[] voci = { "Gestisci Archivio", "Visualizza contenuti", "Shuffle", };
-	
+
 	private final static MyMenu menu = new MyMenu("ARCHIVIO CD", voci);
-	private final static String[] estrai = { "brani shuffle", "estrai un brano da cd",
-	"estrai una compilation " };
+	private final static String[] estrai = { "Estrai casualmente un brano da ogni Cd", "Estrai un brano casualmente da un cd casuale", "Estrai un brano da un Cd scelto" };
 	private final static String[] cerca = { "Visualizza archivio", "Visualizza solo i Cd",
 			"Visualizza i brani di un Cd" };
 	private final static ArchivioCd archivioMusicale = new ArchivioCd();
@@ -39,7 +38,7 @@ public class ManageArchivio {
 	private final static String[] eliminaCD = { "Elimina per scelta", "Elimina per titolo", "Elimina per autore", };
 	private final static String[] eliminaBrano = { "Elimina per scelta", "Elimina per titolo", "Elimina per cantante",
 			"Elimina tutti i Brani sul Cd" };
-	
+
 	private final static String[] aggiungiInArchivio = { "Gestisci Cd", "Gestisci Brani", "FORMATTA ARCHIVIO" };
 	private final static String[] gestisciBrani = { "Inserisci Brano", "Elimina Brano" };
 	private final static String[] gestisciCd = { "Inserisci Cd", "Elimina Cd", };
@@ -176,8 +175,8 @@ public class ManageArchivio {
 	/** inserisce un nuovo brano nel Cd in quella posizione in archivio */
 	private static void inserisciBrano(int posCd) {
 		do {
-			Brano daInserire = ArchivioUtils.creaBrano();
 			try {
+				Brano daInserire = ArchivioUtils.creaBrano();
 				archivioMusicale.getCd(posCd).aggiungiBrano(daInserire);
 				break;
 			} catch (IllegalArgumentException e) {
@@ -223,7 +222,7 @@ public class ManageArchivio {
 				String titoloCdDaEliminare = InputDati.leggiStringaNonVuota(INSERISCI_TITOLO);
 				Cd cdDaEliminare = archivioMusicale.cercaCDPerTitolo(titoloCdDaEliminare);
 				if (archivioMusicale.eliminaCd(cdDaEliminare))
-					System.out.println(HAI_ELIMINATO+"\n->" + cdDaEliminare.toStringCollection());
+					System.out.println(HAI_ELIMINATO + "\n->" + cdDaEliminare.toStringCollection());
 				else {
 					System.out.println("Nessun Cd con titolo " + titoloCdDaEliminare + " trovato");
 				}
@@ -313,7 +312,6 @@ public class ManageArchivio {
 			switch (scelta) {
 			case 0:
 				System.out.println(RICERCA_ANNULLATA);
-
 				return -1;
 
 			default:
@@ -385,7 +383,7 @@ public class ManageArchivio {
 			for (int i = 0; i < braniStringTrovati.length; i++) {
 				stringDaVisu[i] = braniStringTrovati[i];
 			}
-			stringDaVisu[braniStringTrovati.length] = ELIMINARE_TUTTI_I_BRANI+"trovati";
+			stringDaVisu[braniStringTrovati.length] = ELIMINARE_TUTTI_I_BRANI + "trovati";
 			MyMenu sottoMenu = new MyMenu(BRANI_TROVATI, stringDaVisu);
 			int scelta = sottoMenu.scegli();
 			if (scelta == stringDaVisu.length) {
@@ -426,7 +424,7 @@ public class ManageArchivio {
 			for (int i = 0; i < braniStringTrovati.length; i++) {
 				stringDaVisu[i] = braniStringTrovati[i];
 			}
-			stringDaVisu[braniStringTrovati.length] = ELIMINARE_TUTTI_I_BRANI+"trovati";
+			stringDaVisu[braniStringTrovati.length] = ELIMINARE_TUTTI_I_BRANI + "trovati";
 			MyMenu sottoMenu = new MyMenu(BRANI_TROVATI, stringDaVisu);
 			int scelta = sottoMenu.scegli();
 			if (scelta == stringDaVisu.length) {
@@ -456,7 +454,7 @@ public class ManageArchivio {
 	/** Eliminazione di tutti i brani */
 	private static void eliminaTuttiBrani(int cdDoveEliminare) {
 		String cd = archivioMusicale.getCd(cdDoveEliminare).getCodice();
-		if (InputDati.yesOrNo(SEI_SICURO_DI+ELIMINARE_TUTTI_I_BRANI+" in " + cd + "?")) {
+		if (InputDati.yesOrNo(SEI_SICURO_DI + ELIMINARE_TUTTI_I_BRANI + " in " + cd + "?")) {
 			if (archivioMusicale.getCd(cdDoveEliminare).eliminaTuttiBrani())
 				System.out.println(HAI_ELIMINATO + " tutti i brani in " + cd);
 			else
@@ -488,118 +486,85 @@ public class ManageArchivio {
 			break;
 		default:
 			break;
-			
+
 		}
 	}
-	/** Menu estrazioni casuali*/
 
-   private static void estrazioneCasuale() {
-	   
-	   MyMenu menu = new MyMenu(SHUFFLE ,estrai);
+	/** Menu estrazioni casuali */
+
+	private static void estrazioneCasuale() {
+
+		MyMenu menu = new MyMenu(SHUFFLE, estrai);
 		switch (menu.scegli()) {
-		case 0:
-			  InputDati.yesOrNo("vuoi uscire dallo shuffle? ");
-			return;
 		case 1:
 
 			estraiBrani();
 			break;
 		case 2:
-			estraiBrano();                                       
+			estraiBrano();
 			break;
 		case 3:
-			estraiTutto();	
-					
+			estraiCdeBrano();
+
 			break;
 		default:
 			break;
-			
+
 		}
-   }
-   
-  /** estrae un brano da una compilation da un cd casuale*/
-		private static void estraiTutto() {
-			Cd cdEstratto = null;
-			boolean finito = false;
-			byte count=0;
-			do {
-				cdEstratto = archivioMusicale.cdCasuale();
-				if (cdEstratto == null)
-					break;
-				if (cdEstratto.getDurataCd() != 0)
-					finito = true;
-				count++;
-			} while (!finito&&count<3);
+	}
 
-			if (cdEstratto != null) {
-				Brano estratto = cdEstratto.branoCasuale();
-				if (estratto != null) {
-					System.out.println(cdEstratto.belToString());
-					
+	/** estrae un brano da una compilation da un cd casualmente */
+	private static void estraiCdeBrano() {
+		Cd cdEstratto = null;
+		boolean finito = false;
+		byte count = 0;
+		do {
+			cdEstratto = archivioMusicale.cdCasuale();
+			if (cdEstratto == null)
+				break;
+			if (cdEstratto.getDurataCd() != 0)
+				finito = true;
+			count++;
+		} while (!finito && count < 3);
 
-				} else
-					System.out.println("Tutti i Cd sono vuoti");
+		if (cdEstratto != null) {
+			Brano estratto = cdEstratto.branoCasuale();
+			if (estratto != null) {
+				System.out.println(cdEstratto.belToString());
+
 			} else
-				System.out.println(ARCHIVIO_VUOTO);
+				System.out.println("Tutti i Cd sono vuoti");
+		} else
+			System.out.println(ARCHIVIO_VUOTO);
+	}
+
+	/** estrae un brano da un cd scelto */
+	private static void estraiBrano() {
+		int scelta = sceltaCd(CD_IN_ARCHIVIO, "");
+		if (scelta < 0) {
+			Brano estratto = archivioMusicale.getCd(scelta).branoCasuale();
+			System.out.println(estratto.belToString());
 		}
-	   
-		/** estrae un brano da un cd scelto*/	
-		private static void estraiBrano() {
-				int scelta = scegliCd();
-				if (scelta != -1) {
-					Brano estratto = archivioMusicale.getCd(scelta).branoCasuale();
-					if (estratto != null) {
-						System.out.println(estratto.belToString());
-					} else
-						System.out.println("Cd vuoto");
-				} else
-					System.out.println(ARCHIVIO_VUOTO);
+	}
+
+	/** estrae un brano casualmente da ogni cd presente nella collezione */
+	private static void estraiBrani() {
+		StringBuilder shuffle = new StringBuilder();
+		int numCD = archivioMusicale.getNumeroCd();
+		if (numCD != 0) {
+			for (int i = 0; i < numCD; i++) {
+				Cd cdEstratto = archivioMusicale.getCd(i);
+				if (cdEstratto.getNumeroBrani() != 0)
+					shuffle.append(
+							"In " + cdEstratto.getTitolo() + " ho estratto " + cdEstratto.branoCasuale().belToString());
+				else
+					shuffle.append("In " + cdEstratto.getTitolo() + " nessun brano presente");
+				shuffle.append("\n");
 			}
-			private static int scegliCd() {
-				String tuttiCD = archivioMusicale.toStringCdColletion();
-				if (tuttiCD != null&&tuttiCD.length()>0) {
-					System.out.println(tuttiCD);
-					
-				}
-				return -1;
-			}
-			
-			
-			/**estrae un brano casualmente da ogni cd presente nella collezione */
-			private static void estraiBrani() {
-			String tuttiCD = archivioMusicale.toStringCdColletion();
-			if  (tuttiCD != null&& tuttiCD.length()>0) {
-				for (int i = 0; i < tuttiCD.length()-1 ; i++) 
-					archivioMusicale.getCd(i).branoCasuale();
-				}
-			else {System.out.println(CONTENUTI_ESIGUI);
-				
-			}
-			}}
-				
-                	 
-				
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
+			System.out.println(shuffle);
+		} else {
+			System.out.println(CONTENUTI_ESIGUI);
+
+		}
+	}
+}
