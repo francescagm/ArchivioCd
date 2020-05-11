@@ -541,7 +541,7 @@ public class ManageArchivio {
 	/** estrae un brano da un cd scelto */
 	private static void estraiBrano() {
 		int scelta = sceltaCd(CD_IN_ARCHIVIO, "");
-		if (scelta < 0) {
+		if (scelta >= 0) {
 			Brano estratto = archivioMusicale.getCd(scelta).branoCasuale();
 			System.out.println(estratto.belToString());
 		}
