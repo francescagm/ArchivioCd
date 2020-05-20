@@ -7,9 +7,11 @@ import util.mylib.MyMenu;
 
 public class ManageArchivio {
 
-	private static final String CONTENUTI_ESIGUI = "Per eseguire lo shuffle devi arricchire la collezione";
+	private static final String INSERISCI_ALLORA_UN_NUOVO_CD = "\nInserisci allora un nuovo Cd";
+	private static final String CONTENUTI_ESIGUI = "\nPer eseguire lo shuffle devi arricchire la collezione"
+			.toUpperCase();
 	private static final String SHUFFLE = "Shuffle";
-	private static final String ARCHIVIO_VUOTO = "Archivio vuoto ";
+	private static final String ARCHIVIO_VUOTO = "\nArchivio vuoto ".toUpperCase();
 	private static final String BRANI_TROVATI = "Brani trovati ";
 	private static final String CD_IN_ARCHIVIO = "Cd in Archivio ";
 	private static final String ELIMINARE_TUTTI_I_BRANI = "Eliminare tutti i brani ";
@@ -30,7 +32,8 @@ public class ManageArchivio {
 	private final static String[] voci = { "Gestisci Archivio", "Visualizza contenuti", "Shuffle", };
 
 	private final static MyMenu menu = new MyMenu("ARCHIVIO CD", voci);
-	private final static String[] estrai = { "Estrai casualmente un brano da ogni Cd", "Estrai un brano casualmente da un cd casuale", "Estrai un brano da un Cd scelto" };
+	private final static String[] estrai = { "Estrai casualmente un brano da ogni Cd",
+			"Estrai un brano casualmente da un cd casuale", "Estrai un brano da un Cd scelto" };
 	private final static String[] cerca = { "Visualizza archivio", "Visualizza solo i Cd",
 			"Visualizza i brani di un Cd" };
 	private final static ArchivioCd archivioMusicale = new ArchivioCd();
@@ -152,7 +155,7 @@ public class ManageArchivio {
 			MyMenu menu = new MyMenu(CD_IN_ARCHIVIO, strDaVisu);
 			int scelta = menu.scegli();
 			if (scelta == strDaVisu.length) {
-				System.out.println("Inserisci allora un nuovo Cd");
+				System.out.println(INSERISCI_ALLORA_UN_NUOVO_CD);
 				inserisciCd();
 				return;
 			}
@@ -558,8 +561,8 @@ public class ManageArchivio {
 					shuffle.append(
 							"In " + cdEstratto.getTitolo() + " ho estratto " + cdEstratto.branoCasuale().belToString());
 				else
-					shuffle.append("In " + cdEstratto.getTitolo() + " nessun brano presente");
-				shuffle.append("\n");
+					shuffle.append("In " + cdEstratto.getTitolo() + " nessun brano presente\n");
+
 			}
 			System.out.println(shuffle);
 		} else {
