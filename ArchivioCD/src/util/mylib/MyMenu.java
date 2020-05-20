@@ -10,7 +10,7 @@ package util.mylib;
 public class MyMenu {
 	final private static String VOCE_USCITA = "0)\tEsci";
 	final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
-
+	final private static int LUNGHEZZA_RICHIESTA = RICHIESTA_INSERIMENTO.length();
 	private String titolo;
 	private String[] voci;
 
@@ -25,23 +25,15 @@ public class MyMenu {
 	}
 
 	public void stampaMenu() {
-		System.out.println(stampaCornice());
-		System.out.println(titolo);
-		System.out.println(stampaCornice());
+		String titoloCentrato = BelleStringhe.centrata(titolo, LUNGHEZZA_RICHIESTA);
+		System.out.println(BelleStringhe.stampaCornice(titoloCentrato));
+		System.out.println(titoloCentrato);
+		System.out.println(BelleStringhe.stampaCornice(titoloCentrato));
 		for (int i = 0; i < voci.length; i++) {
 			System.out.println((i + 1) + ")\t" + voci[i]);
 		}
-		System.out.println();
-		System.out.println(VOCE_USCITA);
-		System.out.println();
-	}
 
-	private String stampaCornice() {
-		StringBuilder c = new StringBuilder();
-		for (int i = 0; i <= titolo.length(); i++) {
-			c.append('-');
-		}
-		return c.toString();
+		System.out.println('\n' + VOCE_USCITA + '\n');
 
 	}
 

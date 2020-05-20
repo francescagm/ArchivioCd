@@ -19,12 +19,14 @@ public class InputDati {
 		creato.useDelimiter(System.getProperty("line.separator"));
 		return creato;
 	}
-
+/**Legge una {@linkplain String} da input senza nessun controllo
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static String leggiStringa(String messaggio) {
 		System.out.print(messaggio);
 		return lettore.next();
 	}
-
+/**Legge una {@linkplain String} da input, controllando che non sia vuota
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static String leggiStringaNonVuota(String messaggio) {
 		boolean finito = false;
 		String lettura = null;
@@ -39,7 +41,8 @@ public class InputDati {
 
 		return lettura;
 	}
-
+	/**Legge un carattere da input senza nessun controllo
+	 * @param messaggio, da visualizzare in {@code Console}*/
 	public static char leggiChar(String messaggio) {
 		boolean finito = false;
 		char valoreLetto = '\0';
@@ -55,7 +58,9 @@ public class InputDati {
 		} while (!finito);
 		return valoreLetto;
 	}
-
+	/**Legge un carattere da input, controllando che sia all'interno della {@linkplain String} {@code ammissibili}
+	 * @param messaggio, da visualizzare in {@code Console}
+	 * @param ammissibili, e' la {@linkplain String} che contiene tutti i char disponibili*/
 	public static char leggiUpperChar(String messaggio, String ammissibili) {
 		boolean finito = false;
 		char valoreLetto = '\0';
@@ -69,7 +74,8 @@ public class InputDati {
 		} while (!finito);
 		return valoreLetto;
 	}
-
+/**Legge un intero da input, controllando che ciò che si inserisce sia testo
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static Integer leggiIntero(String messaggio) {
 		boolean finito = false;
 		int valoreLetto = 0;
@@ -84,15 +90,18 @@ public class InputDati {
 		} while (!finito);
 		return valoreLetto;
 	}
-
+/**Legge un intero da input Positivo {@code >=1}
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static int leggiInteroPositivo(String messaggio) {
 		return leggiInteroConMinimo(messaggio, 1);
 	}
-
+/**Legge un intero da input che non sia negativo {@code >=0}
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static int leggiInteroNonNegativo(String messaggio) {
 		return leggiInteroConMinimo(messaggio, 0);
 	}
-
+/**Legge un intero da input, assicurandosi che sia inserito un valore {@code >=minimo}
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static int leggiInteroConMinimo(String messaggio, int minimo) {
 		boolean finito = false;
 		int valoreLetto = 0;
@@ -106,7 +115,8 @@ public class InputDati {
 
 		return valoreLetto;
 	}
-
+/**Legge un intero da input, assicurandosi che 
+ * @param messaggio, da visualizzare in {@code Console}*/
 	public static int leggiIntero(String messaggio, int minimo, int massimo) {
 		boolean finito = false;
 		int valoreLetto = 0;

@@ -54,13 +54,14 @@ public class BelleStringhe
 
 	}
  
- private static String stampaCornice(String messa) {
-	  StringBuilder c =new StringBuilder();
-	  for (int i = 0; i <= messa.length()*2; i++) {
-		c.append('-');}
+ public static String stampaCornice(String messaggio) {
+		StringBuilder c = new StringBuilder();
+		for (int i = 0; i <= messaggio.length(); i++) {
+			c.append('-');
+		}
 		return c.toString();
-	
- }
+
+	}
 
 }
 

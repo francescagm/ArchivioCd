@@ -183,7 +183,7 @@ public class ManageArchivio {
 				archivioMusicale.getCd(posCd).aggiungiBrano(daInserire);
 				break;
 			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
+				System.out.println("\n"+e.getMessage());
 				if (!InputDati.yesOrNo(VUOI_RIPROVARE))
 					break;
 			}
@@ -199,14 +199,15 @@ public class ManageArchivio {
 				archivioMusicale.aggiungiCd(daInserire);
 				break;
 			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
+				System.out.println("\n"+e.getMessage());
 				if (!InputDati.yesOrNo(VUOI_RIPROVARE))
 					return;
+				System.out.println();
 			}
 		} while (true);
 
 		int pos = archivioMusicale.cercaPosizioneCd(daInserire);
-		while (InputDati.yesOrNo("Vuoi inserire un nuovo brano?")) {
+		while (InputDati.yesOrNo("\nVuoi inserire un nuovo brano?")) {
 			ManageArchivio.inserisciBrano(pos);
 		}
 		System.out.println("Hai inserito\n" + archivioMusicale.getCd(pos).toStringCollection());
